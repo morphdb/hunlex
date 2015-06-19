@@ -1,0 +1,4 @@
+@node Description Language Index, Files Index, Variables and Options Index, Top
+@unnumbered Description Language Index
+
+@printindex kw

@@ -1,0 +1,89 @@
+@node Related Software and Resources, Variables and Options Index, Troubleshooting, Top
+@chapter Related Software and Resources
+
+@menu
+* Software that can use the output of Hunlex as input::  
+* Available resources::         
+* Hunlex's relatives::          
+@end menu
+
+@node Software that can use the output of Hunlex as input
+@section Software that can use the output of Hunlex as input
+
+@quindex Which softwares can use the output of Hunlex?
+
+@menu
+* Huntools::                    
+* Myspell::                     
+* Jmorph::                      
+* Ispell::                      
+@end menu
+
+@node Huntools
+@subsection Huntools
+
+@quindex Can you recommend a spellchecker?
+@quindex Can you recommend a stemmer?
+@quindex Can you recommend a morphological analyzer?
+
+@node Myspell
+@subsection Myspell
+
+@node Jmorph
+@subsection Jmorph
+
+@quindex Can you recommend a morphological analyzer?
+
+@node Ispell
+@subsection Ispell
+
+
+@node Available resources
+@section Available resources
+
+@quindex Are there any Hunlex resources available for any language?
+
+@menu
+* The Hungarian Morphdb Project::  
+* The English Morphdb Project::  
+@end menu
+
+@node The Hungarian Morphdb Project
+@subsection The Hungarian Morphdb Project
+
+The HunLex framework is being used in the development of an open-source
+morphological database (lexicon and grammar) for the Hungarian language
+in a collaboration between the Hungarian Academy of Sciences, Research
+Institute for Linguistics and the Budapest Institute of Technology,
+Media Education and Research Center Natural Language Processing Lab.
+This database aspires to be the most complete and accurate account of
+Hungarian morphology published so far, and is the result of merging
+several well-respected electronic resources @value{MORPHDBWEB}.
+
+@node The English Morphdb Project
+@subsection The English Morphdb Project
+
+
+
+@node Hunlex's relatives
+@section Hunlex's relatives
+
+@menu
+* XFST etc.::                   
+@end menu
+
+
+@node XFST etc.
+@subsection XFST, TWOLC, LEXC
+
+@quindex Are there software with similar functionality?
+
+For @code{xfst, twolc, lexc}, see 
+
+@uref{http://www.xrce.xerox.com/competencies/content-analysis/fst/home.en.html}
+
+or
+
+@uref{http://www.stanford.edu/~laurik/fsmbook/home.html}
+
+

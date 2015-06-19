@@ -1,0 +1,249 @@
+@node Installation, Bootstrapping, About, Top
+@chapter Installation 
+
+@quindex What do I want to install?
+
+So you want to install the hunlex toolkit (@pxref{Introduction}) from
+the hunlex source distribution.  This document describes what and how
+you can install with this distribution.
+
+@quindex What is Hunlex?
+
+@menu
+* Download::                    
+* Supported Platforms::         
+* Prerequisites::
+* Install::                     
+* Uninstall and Reinstall::     
+* Installed Files::             
+@end menu
+
+@node Download
+@section Download
+
+@quindex Where can I find the sources?
+
+The latest version of the hunlex source distribution is always available
+from the MOKK LAB website at @value{MOKKWEB} or, if all else fails, by
+mailing to me @value{MYEMAIL}.
+
+@node Supported Platforms
+@section Supported Platforms
+
+@quindex What platforms are supported by Hunlex?
+
+The hunlex executable in principle runs on any platform for which there
+is an @code{ocaml} compiler (@pxref{Prerequisites}). This includes
+all Linuxes, unices, MS Windows, etc.  
+
+@quotation
+@strong{Warning:}
+This package has not been tested on platforms other than linux.
+@end quotation
+
+@node Prerequisites
+@section Prerequisites
+
+@quindex What do I need if I want to install this package?
+
+@deffn Prerequisite {ocaml}
+@cindex ocaml
+
+Hunlex is written in the @dfn{ocaml} programming language
+@uref{http://www.ocaml.org/}.  OCaml compilers are extremely easy to
+install and are available for various platforms and downloadable in various
+package formats for free from @uref{http://caml.inria.fr/ocaml/distrib.html}.
+
+You will need @command{ocaml} version >=3.08 to compile hunlex.
+@end deffn
+
+@deffn Prerequisite {ocaml-make} 
+@strong{ocaml-make}
+@cindex ocaml-make
+@cindex OCamlMakefile
+
+@file{OCamlMakefile} (i.e., @code{ocaml-make}) is needed for the installation of
+hunlex and is available from Markus Mottl's homepage at @*
+@uref{http://www.ai.univie.ac.at/~markus/home/ocaml_sources.html#OCamlMakefile}
+@*
+(I used version 6.19. writing on 8.1.2004).
+
+@cindex make, GNU
+
+For @file{OCamlMakefile} you will need ocaml and @samp{GNU make}.
+(for @samp{ocaml-make} version 6.19 you will need @samp{GNU make} version >= 3.80)
+
+@quotation 
+@strong{NB:}
+Most probably earlier versions of @code{ocaml-make} and @code{GNU make}
+should also work but have not been tested yet.
+@end quotation
+
+@end deffn
+
+You don't need anything else to use hunlex (but a little patience).
+
+@node Install
+@section Install
+
+@quindex How do I install the hunlex?
+@cindex make, hunlex installation
+@cindex Makefile, hunlex installation
+
+Hunlex is installed in the good old way, i.e., by typing 
+
+@example
+$ make && sudo make install
+@end example 
+
+in the toplevel directory of the unpacked distribution.
+Read no further if you know what I am talking about or if you trust some God.
+
+The hunlex distribution is available in a source tarball called @file{hunlex.tgz}.
+First you have to unpack it by typing  
+
+@example
+$ tar xzvf hunlex.tgz
+@end example
+
+Then, you enter the toplevel directory of the unpacked distribution with
+@example
+$ cd hunlex
+@end example
+
+To compile it, simply type
+
+@example
+$ make
+@end example 
+
+in the toplevel directory of the distribution.
+
+To install it (on what gets installed, @pxref{Installed Files}), type
+
+@example
+$ make install
+@end example
+
+Well, by default this would want to install things under @file{/usr/local}, so
+you have to have admin permissions. If you are not root but you are in the
+sudoers file with the appropriate rights, you type:
+
+@example 
+$ sudo make install
+@end example
+
+You can change the location of the installation by changing the install prefix path with 
+
+@example
+$ sudo make @env{PREFIX}=@file{/my/favourite/path} install
+@end example
+
+Changing the location of installation for individual install targets
+individually is not recommended but easy-peasy if you have a clue about
+@samp{make} and @file{Makefile}-s.  To do this you have to change the relevant
+@file{Makefile}-s in the subdirectories of the distribution.
+@xref{Installed Files}.
+
+If it works, great! Go ahead to @ref{Bootstrapping}.
+
+If you have problems, doubleckeck that you have the prerequisites
+(@pxref{Prerequisites}). If you think you followed the instructions
+but still have problems, submit a bug report (@pxref{Submitting a Bug Report}).
+
+If you are upgrading an earlier version of hunlex, you may want to
+@i{uninstall} the earlier one first (@pxref{Uninstall and Reinstall}).
+
+@node Uninstall and Reinstall
+@section Uninstall and Reinstall
+
+@quindex How do I uninstall hunlex?
+@quindex How do I upgrade hunlex?
+@quindex How do I reinstall hunlex?
+
+The install prefix is remembered in the source distribution in the file
+@file{install_prefix}. So after you @code{cd} into the toplevel directory of the distribution,
+you can uninstall hunlex by typing
+
+@fiindex install_prefix
+
+@example
+$ make uninstall
+@end example
+
+You can reinstall it with
+
+@example
+$ make reinstall 
+@end example
+
+at any time if you make modifications to the code or compile options.
+
+@c ref to changing keywords, maybe
+
+@quotation
+@strong{Warning:}
+Note that if you fiddle with changing the location of individual install targets, uninstall
+and resinstall will not work correctly.
+@end quotation
+
+
+@node Installed Files
+@section Installed Files
+
+@quindex What gets installed when I install hunlex?
+
+The following files and directories are installed, paths are relative to
+the @i{install prefix} (@pxref{Install}):
+
+@itemize
+
+@item
+@file{bin/hunlex}
+
+the executable which can be run on the command line (@pxref{Command-line Control})
+@fiindex hunlex
+
+@item
+@file{lib/HunlexMakefile} 
+
+is the @file{Makefile} that defines the
+toplevel control of hunlex (@pxref{Toplevel Control}). This file is to
+be @samp{include}-ed into your @i{local} @file{Makefile} to give you a
+@samp{Makefile}-style wrapper for calling hunlex (see
+@ref{Bootstrapping} and @ref{Toplevel Control}). 
+
+@fiindex HunlexMakefile
+@fiindex Makefile, hunlex toplevel
+
+Note that @file{HunlexMakefile} will assume that the hunlex executable
+is found in your path. Make sure that @var{install-prefix}@file{/bin} is
+in the path (usually @file{/usr/local/bin} @i{is} in the @env{PATH}.
+
+@item
+@file{share/doc/hunlex//}
+
+is a directory containing hunlex documentation. Various documents in various formats
+are found under this directory including a replica of this document.
+
+TODO: this is not yet the case
+
+@item
+@file{man/hunlex.1}
+
+@fiindex hunlex.1
+
+is the hunlex man page describes the command-line use of hunlex (also
+@pxref{Command-line Control}. Command-line use of hunlex is not the
+recommended way of using it for the general user.  Instead, use hunlex
+through the toplevel control described in a chapter (@pxref{Toplevel
+Control}).
+
+@quotation
+@strong{Todo:}
+there is no man page yet
+@end quotation
+
+@end itemize
+
+

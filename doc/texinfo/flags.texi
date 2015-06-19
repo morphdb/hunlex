@@ -1,0 +1,216 @@
+@node Flags, Troubleshooting, Tags, Top
+@chapter Flags
+
+@quindex What is a flag?
+@cindex flags
+
+@dfn{Flags} are used in the output resources (@pxref{Output Resources})
+to index affix rules. Each entry in the dictionary file has a set of
+flags indicating which affix rules can be applied to it.
+
+So, flags are given by hunlex and written in the affix and dictionary
+files.  @strong{There is no such thing as a flag in the hunlex input
+grammar or lexicon}, the files which describe your morphology.  
+
+You can specify some aspects of what flags hunlex will assign to affix
+classes and how. This is what the present chapter is about.
+
+@menu
+* Two Forms of Flags::          
+* Flaggable Characters::        
+* Limit on the Number of Flags::  
+* Special Flags::               
+@end menu
+
+@node Two Forms of Flags
+@section Two Forms of Flags
+
+@quindex  What does a flag look like?
+
+Flags can be a @dfn{one-character} or @dfn{two-character} long.
+
+@command{Myspell} (and legacy xspell implementations) can only handle
+single-character flags. For the general case, this should be ok and is
+the default. If you are dealing with languages of sensible complexity,
+this default is ok and you don't need to read this chapter any further.
+
+@cindex flags, double
+@cindex double flags
+
+@dfn{Double flags} are composed of a number as first character and a
+@dfn{flaggable character} (@pxref{Flaggable Characters}) as the second,
+such as '@samp{3f}' or '@samp{9t}'. In order to use double flags, use
+the @env{DOUBLE_FLAGS} option
+@c
+(@pxref{Resource Compilation Options}). Read on to learn why you would
+use double flags
+@c
+(@pxref{Limit on the Number of Flags}).
+
+@node Flaggable Characters
+@section Flaggable Characters
+@quindex Which characters can be flags? 
+@quindex What is a flaggable character? 
+
+@dfn{flaggable} characters are characters that hunlex can use as flags
+(in case of single-character flags) or can be the second character of a
+double flag (@pxref{Two Forms of Flags}).  All non-whitespace characters
+are in principle flaggable.
+
+The actual choice of flaggable characters is by default the following
+132 characters which are hard-wired in hunlex.  I am not in a position
+to list them here, because...  (I bet my hundred forints that some of
+the characters below are displayed completely differently for you than
+for me, in any format any display, ranging from your terminal trough
+your browser to acroread.) They are however, included, in the original
+texinfo version of this document as a comment (see file
+@samp{doc/texinfo/flags.texinfo}, or to be sure in the source code,
+@samp{src/hunlex_wrapper.ml})
+
+@c abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ¢£¥§©ª«¬®²³µ¶¹ºÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ
+
+Flaggable characters, however, can be @i{customized} through hunlex's
+@env{FLAGS} options (@pxref{Input File Options}). This option
+takes a filename. The contents of the file is the sequence of characters
+to be used for flags without any delimiters.
+
+@fiindex flags file
+@fiindex flags.conf
+
+@quotation 
+@strong{Warning:} Make sure you do not include any whitespace in this
+file (other than a trailing newline), or do not include any character
+twice. Since characters are not checked for sanity, doing otherwise may
+result in ill-formed affix files or conflated affix classes. If you use
+double-flags, do not include numbers as flaggables.
+@end quotation
+
+@quotation 
+@strong{Todo:} Why don't we bloody check this?
+Checking of flaggable characters should be amended in a future
+version.
+@end quotation
+
+@quindex Which flags will be in the affix file and which flag is a particular
+rule indexed with?
+
+The association of flags to affix classes takes flags from left to
+right. This means that if the output requires 35 flags, the first 35
+flaggable characters will be used.  This is, however, @i{all that can be
+said}: which actual flag comes to which affix class can not be further
+specified.
+
+@quotation 
+@strong{Warning:} This last sentence is a warning in itself. For people
+who are used to fiddling with affix files that were manually created (in
+fact almost all ispell resources), it has to be stressed:
+@i{hunlex-generated affix files are not to be read by humans and should
+be considered binary. Associations of flags with particular affix
+rules/classes are not permanent across various configurations/resource
+compilations. If you want to post-process affix files, @strong{never}
+assume particular flags are meaningful}. This is rather obvious once you
+realize that the affix rules/classes themselves are not consistent
+across different parametrizations, either (see e.g., levels).  This
+policy is called @dfn{dynamic flagging}. 
+
+An exception from under dynamic flagging might be special flags which
+are fairly consistent since their expression can be customized to
+particular strings (@pxref{Resource Compilation Options}, Affix file
+variables). But this feature will soon cease to exist, so just 
+wipe your tears off your face, be happy that you have a hunlex
+resource and forget your old flags.
+@end quotation
+
+
+@node Limit on the Number of Flags
+@section Limit on the Number of Flags
+
+@cindex flags, limit on the number of
+@quindex How many flags (affix classes) can I have?
+
+If you use single-character flags (@pxref{Two Forms of Flags}), the
+number of flags equals the number of flaggable characters, i.e., the
+length of the custom flag file (@pxref{Resource Compilation Options},
+@samp{flags.conf}) or 132, by default 
+@c
+(@pxref{Flaggable Characters}). This is also the maximum number of affix
+classes you can have in your output resources.
+
+(After flaggable characters will be chosen to express the special flags
+(@pxref{Special Flags}), the number of possible affix classes is the
+number of flaggables minus the number of special flags needed.)
+
+Sometimes this is not enough for languages with hugely complex and
+lexically idiosynchratic morphology and one has to use @dfn{double
+flags} (@pxref{Two Forms of Flags}). You can tell whether you really
+need this if hunlex resource compilation stops complaining that there
+are not enough flags (exception @samp{Not_enough_flags}).
+
+@c (see exceptions).
+
+You tell hunlex to use double flags with the appropriately named
+@env{DOUBLE_FLAGS} option (@pxref{Resource Compilation Options}). With
+double flags you can have 10 times more affix classes than flaggable
+characters, i.e., 1320 (from '0a' to '9z' or whatever) with the default
+flaggables (@pxref{Flaggable Characters}).
+
+@quotation
+@strong{Warning:} Double flags are only understood by the
+@command{morphbase} implementations (@pxref{Huntools}) but not
+@command{ispell}, @command{myspell} and (yet) @command{jmorph}. 
+
+This is a reason why one might use the huntools package.  Please tell us
+uf this is the sole reason you are using huntools.
+@end quotation
+
+@quotation
+@strong{Caveat:}
+The use of double flags for the morphbase routines is a
+compile-time option at the moment. 
+@end quotation
+
+@quotation
+@strong{Caveat:} When customizing your flaggables (@pxref{Flaggable
+Characters}), and using double flags, you can have up to about two
+thousand affix classes. If this is not enough for you (you get the
+exception @samp{Not_enough_flags}), you are likely to have a problem in
+your grammar (@pxref{Troubleshooting}). If you are sure it is not a
+grammar problem, you better choose another language. At any rate, please
+notify us (@pxref{Contact}) about this extraordinary case and we might
+even extend the support for flags even in morphbase on one of our free
+afternoons (@pxref{Requesting a New Feature}).
+@end quotation
+
+@node Special Flags
+@section Special Flags
+@quindex What are special flags?
+@cindex flags, special
+@cindex special flags
+
+There are @dfn{special flags} in the affix file (the full documentation
+of special flags is (hopefully) found in the morphbase and jmorph
+docs). Special flags are special because they do not index affixes, but
+encode other sorts of information needed by analysis routines. There are
+a number of flags one can configure through the options
+(@pxref{Options}). These are
+@itemize
+@item @env{ROOT_ONLY_FLAG}
+@item @env{STEM_GIVEN}
+@end itemize
+
+@quotation 
+@strong{Todo:}
+Include the ones below into the implementation and uncomment it from the texinfo document
+@end quotation
+these are:
+
+WARNING, CAVEAT: if you use two-character flags (-double_flags
+option), you have to make sure that special flags are also
+two-characters, otherwise it will lead to ill-formed affix files. If
+you set flags through the toplevel Makefile's variables, make sure
+your flags are quoted (otherwise Makefile will resolve the flag '~'
+to, say, '/home/tron' and you won't understand what went wrong...)
+
+TODO: Special flags should NOT be user-configurable at all. They should be 
+assigned the first possible flags.
+

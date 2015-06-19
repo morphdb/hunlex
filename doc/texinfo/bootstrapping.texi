@@ -1,0 +1,95 @@
+@node Bootstrapping, Toplevel Control, Installation, Top
+@chapter Bootstrapping
+
+@quindex How do I start using hunlex?
+
+So you installed hunlex and its running smoothly.  
+
+This section leads you through the first steps and gives you hints on how
+you set out working with hunlex.
+
+Create your sandbox directory. 
+
+Change to it. 
+
+Create your own @dfn{local Makefile}. This will be your connection to the
+hunlex toplevel control. For your Makefile to understand hunlex
+predefined toplevel targets (@pxref{Targets}), you have to 
+@dfn{include} (@i{not} insert) the hunlex systemwide Makefile.
+So you create a Makefile with the following content:
+
+@example
+-include /path/to/HunlexMakefile
+@end example
+
+where @samp{/path/to/HunlexMakefile} is the path to
+@samp{HunlexMakefile} which is supposed to be installed on your system
+(@pxref{Installed Files}), by default under @samp{/usr/local/lib/HunlexMakefile}.
+
+@fiindex Makefile, local
+@fiindex HunlexMakefile
+
+Now, you are ready to test things for yourself.  In order to see if all
+is well, type 
+@example 
+$ make
+@end example
+at your prompt in the same sandbox directory.
+
+In fact, you will always type the @command{make} command to control hunlex.
+If you don't give arguments to @command{make}, a so-called @dfn{default} 
+action (target, @pxref{Targets}) is assumed. The default target
+is @samp{resources} which creates the output resources according 
+to the default settings (@pxref{Options}). 
+@cindex default target
+@cindex default settings
+
+Toplevel control assumes by default that all its necessary resources are
+found in the current directory (@pxref{Input File Options}). 
+If this is not the case, because the files do not exist, the compulsory ones
+are created and the compilation runs creating the output resources.
+
+Surely, the missing files are created without contents and your output
+resources will be empty as well. However, this vacuous run will test
+whether hunlex (and toplevel control) is working properly.
+
+Now if you list your directory, you should see:
+@example
+$ ls
+affix.aff       grammar  Makefile    phono.conf
+dictionary.dic  lexicon  morph.conf  usage.conf
+@end example
+
+If this is not the case, go to @pxref{Troubleshooting}.
+
+The meaning of these files in your directory are explained in detail in
+another chapter (@pxref{Files}).
+
+If you type @code{make} (or the equivalent @command{make resources}
+again, your resources will not be compiled again, since the input
+resources did not change. If you still want to compile your resources
+again, you type
+
+@example 
+$ make new resources
+@end example
+
+which forces toplevel to recompile although no input files changed
+(@pxref{Special Targets}).
+
+Now. 
+
+If you want to develop (toy around with) your own data and create
+resources, the next step is to fill in the input files.  Read on to
+learn more about files (@pxref{Files}) and then about the hunlex
+morphological resource specification language (@pxref{Description
+Language}). Since you want to test your creation, you ultimately have to
+learn about toplevel control (@pxref{Toplevel Control}) and gradually
+about the advanced issues in the chapters that follow these.
+
+If you already have your hunlex-resources describing your favourite
+language ready and you want to compile specific output resources from it
+with hunlex, you better read about toplevel control with special
+attention to the options (@pxref{Toplevel Control}). If you want to
+fiddle around with more advanced optimization, such as levels and tags,
+you may end up having to read everything, sorry.

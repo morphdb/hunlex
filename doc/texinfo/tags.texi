@@ -1,0 +1,143 @@
+@node Tags, Flags, Levels, Top
+@chapter Tags
+
+@quindex What is morphological annotation? 
+
+@cindex morphological annotation
+@cindex tags
+@cindex output information, of a word-analysis routine
+
+We call the information that a morphological analyzer is expected to
+output for an analyzed word a piece of @dfn{morphological annotation}.
+In more general terms, howver, when we talk about any kind of
+word-analysis routine such as a spell-checker, stemmer, we call the
+output information these routines associate with words @dfn{tags}.  We
+want to emphasize here that this piece of output information 'tags' the
+whole that is analyzed. The tag is used to annotate words in a corpus by
+decorating a raw text with useful extra information.  
+
+@quotation 
+@strong{NB:} Tagging as we use it in no way constitutes a constituent
+structure, segmentation, etc. of the input word form.
+@end quotation
+
+This document describes the ways in which you can associate tags with
+your morphemes (or individual stem variants and affix rules).  These
+tags should be thought to constitute ingredients of and output tag that
+an analyzed word containing that morpheme would be.  Certainly, not all
+analysis software can or is supposed to output any useful information
+about the morphological makeup of the word. For instance, a
+spell-checker is typically required only to recognize whether a word is
+correct (usually in a strict normative sense), but a morphological
+analyzer or a stemmer is supposed to output some information. Since the
+huntools routines are able to perform full morphological analysis, not
+just recognition (REFERENCE), adding morphological tags to your rules is
+worth your while. Nevertheless, if you never ever want to be able to
+output any useful info (because you only care about spellchecking), you
+don't really need to read on.
+
+
+@menu
+* Merging Tags::                
+* Feature Structures::          
+@end menu
+
+@node Merging Tags
+@section Merging Tags
+@cindex tags, merging tags
+
+@quindex How are tags calculated by the analyzer?
+
+The output tag associated with a successful analysis of a word is
+extremely primitively defined by the concatenation of the tags assigned
+to the rules and the stem which constituted the parse of the word.
+
+@quotation
+@strong{NB:}
+It is not clear whether the order of prefixes stems and suffixes should matter
+in some cases. In the usual case we assume that what the analyzer will do 
+is concatenation of tags in the order of affix-rule stripping. 
+@end quotation 
+
+@quotation 
+@strong{Todo:} What the analyzers do with the tags should be
+clarified. In fact, both huntools and jmorph do something that is
+smarter for particular purposes but not reasonably generalizable or even
+incorrect for the general case.
+@end quotation
+
+
+@quindex Where do the tags come from? 
+
+For this to work, you can assign tags (chunks of output annotation) to
+any affix variant and stem variant in your grammar and lexicon. This is
+done with @samp{TAG} expressions (@pxref{Description Language},
+@samp{TAG} keyword).
+
+@quindex What does hunlex do with the tags?
+
+@quindex How can I configure what the output tags of my analyzer will be?
+
+As hunlex merges affixes, it merges their tags accordingly as expected.
+There are a number of formatting options with which you can influence
+the way you put together tags. One is the @env{TAG_DELIM} option 
+@c
+(@pxref{Resource Compilation Options}), which sets the delimiter between
+any two tags. If multiple tags are given by TAG expressions, they are
+also concatenated with this delimiter in the order of their appearance
+within the rule-block.
+
+@cindex output options
+@cindex tags, formatting output
+
+Depending on the main output mode of hunlex, various pieces of
+information can be chosen to be considered as tags to output. This is
+important if you want to configure your resources so that it will give
+you a stemmer or a tagger or an analyzer and various other options are
+available, @pxref{Resource Compilation Options}.
+
+@node Feature Structures
+@section Feature Structures 
+
+@cindex feature structures
+@quindex What are feature structures good for?
+
+Hunlex also support feature structures as a kind of annotation scheme. 
+This is extremely useful to crossckeck the correctness of your tags. 
+Tags can be quite messy and since they are pieces of strings, they are
+difficult to check. 
+
+@quindex What are feature structures?
+
+Feature structures are structured objects which are checked against a
+signature (given in the @file{signature} file, which is the value of the
+option @env{SIGNATURE}, @pxref{Input File Options}) and are merged with
+graph-unification. As annotations to give complex morphological
+information, they are more expressive and adequate than pieces of tags
+that are concatenated. Also, feature structures, unlike just arbitrary
+strings in the tags, are interpretable data structures which one can
+directly calculate with, say, in a syntactic analyzer using the output
+of the morphological analyzer.
+
+That said, it has to be added that the analyzers themselves do not
+support these feature structures. This means that they still manipulate
+pieces of feature-structure descriptions as strings and glue them
+together.  If you use the feature structures within your hunlex
+description, however, you can be certain that, even if the analyzer just
+concatenates them, the resulting analyses describe valid FS-s according
+to your signature (see also the @env{SIGNATURE} option under
+@c
+@ref{Input File Options}).
+
+@quotation 
+@strong{Todo:}
+Include a proper description of the extended KR framework of FS-s.
+@end quotation
+
+@quotation 
+@strong{Todo:}
+No support for derivations is implemented yet (it is on the way).
+@end quotation
+
+
+

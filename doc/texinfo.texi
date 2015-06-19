@@ -1,0 +1,158 @@
+@ignore
+@chapter
+@v{}
+@comment
+@ifset 
+@ifclear
+@c comment
+
+
+This marks the @anchor{x-spot}spot.
+     ...
+     @xref{x-spot,,the spot}.
+
+@option
+@command  equiv @code
+@file
+@env
+
+@samp for characters
+
+@verb{|@|}
+
+Use the @var command to indicate metasyntactic variables. A metasyntactic variable is something that stands for another piece of text. For example, you should use a metasyntactic variable in the documentation of a function to describe the arguments that are passed to that function.
+
+for instance 
+@code{make @var{options} @var{targets}}
+
+
+@strong{Warning:}
+
+environments
+@example
+@verbatim
+
+@display
+
+@verbatiminclude file-name
+
+
+indices
+
+programs 
+
+
+`cp'
+(@cindex) concept index, for general concepts. 
+
+`fn'
+(@findex) function index, for function and function-like names (such as entry points of libraries). 
+
+I use it for targets
+
+`ky'
+(@kindex) keystroke index, for keyboard commands. 
+
+`pg'
+(@pindex) program index, for names of programs. 
+
+for files
+
+`tp'
+(@tindex) data type index, for type names (such as structures defined in header files). 
+
+keywords
+
+`vr'
+(@vindex) variable index, for variable names (such as global variables of libraries).
+
+options, varisables
+
+do not use colons
+
+
+@defindex
+
+
+14.10.1 Glyphs Summary
+
+Here are the different glyph commands: 
+=>
+@result{} points to the result of an expression. 
+
+==>
+@expansion{} shows the results of a macro expansion. 
+
+-|
+@print{} indicates printed output. 
+
+error-->
+@error{} indicates that the following text is an error message. 
+
+==
+@equiv{} indicates the exact equivalence of two forms. 
+
+-!-
+@point{} shows the location of point.
+
+
+
+The break commands create or allow line and paragraph breaks: 
+@*
+Force a line break. 
+
+@sp n
+Skip n blank lines. 
+
+@-
+Insert a discretionary hyphen. 
+
+@hyphenation{hy-phen-a-ted words}
+Define hyphen points in hy-phen-a-ted words. 
+
+These commands hold text together on a single line: 
+@w{text}
+Prevent text from being split and hyphenated across two lines. 
+
+@tie{}
+Insert a normal interword space at which a line break may not occur. 
+
+The pagination commands apply only to printed output, since Info files do not have pages. 
+@page
+Start a new page in the printed manual. 
+
+@group
+Hold text together that must appear on one printed page. 
+
+@need mils
+Start a new printed page if not enough space on this one.
+
+
+The template for a definition looks like this: 
+
+     @deffn category name arguments...
+     body-of-definition
+     @end deffn
+
+For example, 
+
+     @deffn Command forward-word count
+     This command moves point forward @var{count} words
+     (or backward if @var{count} is negative). ...
+     @end deffn
+
+produces 
+? Command: forward-word count
+
+
+This function moves point forward count words (or backward if count is negative). ... 
+
+Capitalize the category name like a title. If the name of the category contains spaces, as in the phrase `Interactive Command', enclose it in braces. For example: 
+
+     @deffn {Interactive Command} isearch-forward
+     ...
+     @end deffn
+
+Otherwise, the second word will be mistaken for the name of the entity. As a general rule, when any of the arguments in the heading line except the last one are more than one word, you need to enclose them in braces. 
+
+Some of the definition commands are more general than others. The @deffn command, for example, is the general definition command for functions and the like?for entities that may take arguments. When you use this command, you specify the category to which the entity belongs. Three predefined, specialized variations (@defun, @defmac, and @defspec) specify the category for you: ?Function?, ?Macro?, and ?Special Form? respectively. (In Lisp, a special form is an entity much like a function.) Similarly, the general @defvr command is accompanied by several specialized variations for describing particular kinds of variables.

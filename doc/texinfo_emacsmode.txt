@@ -1,0 +1,77 @@
+C-c C-c 
+plus
+c code
+d dfn
+e end
+i item
+k kbd
+n node
+o noindent
+s samp
+t table
+v var
+x example
+
+C-u <number> C-c C-c key
+puts the following number words into the env key
+
+update commands automatically update structure
+
+M-x texinfo-insert-node-lines
+before every section/chapter
+
+2.8 Texinfo Mode Summary
+
+In Texinfo mode, each set of commands has default keybindings that begin with the same keys. All the commands that are custom-created for Texinfo mode begin with C-c. The keys are somewhat mnemonic. 
+Insert Commands
+
+The insert commands are invoked by typing C-c twice and then the first letter of the @-command to be inserted. (It might make more sense mnemonically to use C-c C-i, for `custom insert', but C-c C-c is quick to type.) 
+
+     C-c C-c c       Insert `@code'.
+     C-c C-c d       Insert `@dfn'.
+     C-c C-c e       Insert `@end'.
+     C-c C-c i       Insert `@item'.
+     C-c C-c n       Insert `@node'.
+     C-c C-c s       Insert `@samp'.
+     C-c C-c v       Insert `@var'.
+     C-c C-c {       Insert braces.
+     C-c C-c ]
+     C-c C-c }       Move out of enclosing braces.
+     
+     C-c C-c C-d     Insert a node's section title
+                    in the space for the description
+                    in a menu entry line.
+Show Structure
+
+The texinfo-show-structure command is often used within a narrowed region. 
+
+     C-c C-s         List all the headings.
+The Master Update Command
+
+The texinfo-master-menu command creates a master menu; and can be used to update every node and menu in a file as well. 
+
+     C-c C-u m
+     M-x texinfo-master-menu
+                    Create or update a master menu.
+     
+     C-u C-c C-u m   With C-u as a prefix argument, first
+                    create or update all nodes and regular
+                    menus, and then create a master menu.
+Update Pointers
+
+The update pointer commands are invoked by typing C-c C-u and then either C-n for texinfo-update-node or C-e for texinfo-every-node-update. 
+
+     C-c C-u C-n     Update a node.
+     C-c C-u C-e     Update every node in the buffer.
+Update Menus
+
+Invoke the update menu commands by typing C-c C-u and then either C-m for texinfo-make-menu or C-a for texinfo-all-menus-update. To update both nodes and menus at the same time, precede C-c C-u C-a with C-u. 
+
+     C-c C-u C-m     Make or update a menu.
+     
+     C-c C-u C-a     Make or update all
+                    menus in a buffer.
+     
+     C-u C-c C-u C-a With C-u as a prefix argument,
+                    first create or update all nodes and
+                    then create or update all menus.

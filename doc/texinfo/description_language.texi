@@ -1,0 +1,433 @@
+@node Description Language, Files, Toplevel Control, Top
+@chapter Description Language
+
+
+This chapter is about the framework that allows you to describe the
+morphology and lexicon of a language. Below we specify the syntax and
+semantics of this description language. The files written in this
+language (the @file{lexicon} and @file{grammar}) are the primary
+resources of hunlex (@pxref{Input Resources}) and the basis for all
+compiled output (how this works is described in another chapter,
+@pxref{Toplevel Control}).
+
+There are three kinds of @dfn{statement} in this language: 
+@cindex statement
+
+@itemize
+@item morph definition
+@item macro definition
+@item metadata definition
+@end itemize
+
+@cindex morph definition
+@cindex macro definition
+@cindex metadata definition
+
+Only the @file{grammar} file can contain macro definitions
+(@pxref{Macros}) and metadata definitions (@pxref{Metadata}) and both
+the @file{lexicon} and the @file{grammar} file can contain morph
+definitions which describe morphological units (affix morphemes, lexemes
+and their paradigms). In this respect, the syntax of the lexicon and
+grammar files are identical and, therefore, it is discussed together
+(@pxref{Morphs}) are not described separately, although the
+usefulness (and sometimes even the semantics) of certain expressions
+might be different in the lexicon and in the grammar.
+
+@menu
+* Morphs::                      
+* Macros::                      
+* Metadata::                    
+@end menu
+
+@node Morphs
+@section Morphs
+
+@cindex variant, as part of a morph statement
+@cindex morph
+@cindex preamble, the header part of a morph statement
+
+@dfn{Morphs} are the central entities in the description language. They
+stand for morphological units of any size and abstractness including
+affix morphemes, lexemes, paradigms, etc. and are not what linguists
+call morphs (i.e., a particular occurrence of one morpheme). Morphs are
+meant to describe an affix morpheme or a lexeme, but in fact, it is up
+to you what level of abstractness you find useful in your grammar, so
+you can have individual morphs describing each allomorph of a morpheme
+or each stem variant of a lexeme. But the point is that morphs support
+description of @dfn{variants} or allomorphs. Anyway, a morph is
+basically a collection of rules, variants, etc. that somehow belong
+together. Ideally, a variant of an affix morpheme is actually an affix
+allomorph, a concrete affixation rule, while a variant of a lexeme is a
+stem variant or an exceptional form of the lexeme's paradigm.
+
+@menu
+* Morph Preamble and Variants::  
+* Blocks::                      
+@end menu
+
+@node Morph Preamble and Variants
+@subsection Morph Preamble and Variants
+
+@deffn statement (MORPH@w{:}) preamble, variant0, variant1, ... ; 
+@deffnx {preamble} {} morph-name block...
+@deffnx {variant} {} block...
+@end deffn
+
+A morph statement is introduced by an optional @env{MORPH:} keyword. It
+is a good idea to drop it and start the statement directly with the
+preamble (in fact, the name of the morph), which is compulsory.
+
+A morph description has a @dfn{preamble}, i.e., a header describing the
+global properties of the morph, the properties which characterize all of
+its variants/allomorphs. 
+
+After the preamble, one finds the variants one after the other. The
+preamble and the variants are delimited by a comma.
+
+Finally, the morph definition like all other statements is closed by a
+semicolon.
+
+
+
+The preamble starts with the @dfn{name} of the morph. The name of the
+morph can be any arbitrary id, a mnemonic string that ideally uniquely
+identifies the morph. Referring to other morphs is an important in
+describing how morphemes can be combined: in order for these references
+to be reliable, the names in the grammar are supposed to be unique. This
+is not important in the lexicon, where homophonous lemmas can have
+identical names (however, this is not recommended, since, in such a
+case, for instance, morphological synthesis would be unable to
+distinguish two senses especially if they are of the same
+morphosyntactic category).
+
+@cindex block
+@cindex block, the blocks used within morph statements
+
+@quindex What is a  block?
+@quindex What is a variant?
+@quindex How many blocks can one have in a variant?
+@quindex Can one iterate the same type of blocks?
+@quindex How many arguments a block can have?
+
+The rest of the preamble as well as each individual variant is composed
+of @dfn{blocks}. Blocks are the ingredients of the description, they
+specify information such as conditions of rule application, output of a
+rule, the tag associated with the rule, etc.  
+
+In sum, then, morphs have the following structure:
+
+@deffn statement (MORPH@w{:}) morph-name block ... (, block ... )* ;
+@end deffn
+
+Blocks are explained in detail in the next subsection.
+
+@node Blocks
+@subsection Blocks
+
+Blocks are the ingredients of the description, they specify information
+such as conditions of rule application, output of a rule, the tag
+associated with the rule, etc.  
+
+Blocks all have a leading @dfn{keyword} followed by some expressions
+(arguments) and last till the next keyword or the end of the variant:
+
+@deffn block KEYWORD argument...
+@end deffn
+
+Blocks can come in any order within a variant and can be repeated any
+number of times. So writing
+
+@example
+KEYWORD: argument0 argument1 argument2 ...
+@end example
+
+has the same effect as when it is written like
+
+@example
+KEYWORD: argument0 KEYWORD: argument1 KEYWORD: argument2 ...
+@end example
+
+or even 
+
+@example
+KEYWORD: argument0 @var{SOME-OTHER-BLOCKS} KEYWORD: argument1 @var{SOME-OTHER-BLOCKS} KEYWORD: argument2 ...
+@end example
+
+or when it is 'included' with a macro (@pxref{Macros}).
+
+@cindex cumulative, blocks
+Certain blocks specify information in a @dfn{cumulative} way, so every
+time they are specified the information is added to the info specified
+so far.  For instance an IF block is cumulative, all the arguments of
+all the IF blocks of a variant cumulate to give the conditions of rule
+application, i.e., the rule applies only if all conditions on features
+are satisfied by the input (see IF block below).
+
+However, other blocks do not specify information that can be interpreted
+cumulatively, so it does not make sense to have more than one argument
+with them or specify them more than once for a variant. (They, however,
+may still be specified in the preamble and overriden in a variant, for
+instance).
+
+In every case, out of contradictory information, the one given last
+''has the last word'' overriding previous ones.
+
+So if you write
+
+@example
+CLIP: 1 CLIP: 2
+@end example
+
+it is the same as
+@example
+CLIP: 2
+@end example
+
+In what follows, blocks are listed and explained one by one.
+
+@deffn block DEFAULT feature ...
+default morphs are used to assign features to inputs unspecified for some features.
+A morph with a default block just adds extra rules that leave alone 
+inputs which are specified for any of the features to be defaulted.
+The variants of a morph having a default block in their preamble 
+will assume that neither of the features to be defaulted is 
+present in the input. 
+
+So 
+morph DEFAULT: feature0 feature1
+, MATCH: x OUT: feature0
+;
+
+is equivalent to 
+
+morph 
+, IF: !feature0 feature1 OUT: feature1
+, IF: feature0 !feature1 OUT: feature0
+, IF: feature0 feature1 OUT: feature0 feature1
+, IF: !feature0 !feature1 MATCH: x OUT: feature0
+
+
+
+Filters typically want to pass on their whole input by default.  
+@end deffn
+
+@deffn block VARIANT variant
+this block defines the actual affix or lexis.
+
+The exact shape of @var{variant} determines what type of affix, lexis the variant 
+describes: 
+@itemize
+
+@item +aff
+describes a suffix
+when the rule applies @var{aff} is appended to the end of the input
+(after possibly clipping some characters)
+
+@item aff+
+describes a prefix
+when the rule applies @var{aff} is appended to the beginning of the input
+(after possibly clipping some characters)
+
+@item pref+suff
+describes a circumfix
+
+when the rule applies 
+@var{pref} is appended to the beginning of the input
+(after possibly clipping some characters)
+and @var{suff} is appended to the end of the input
+(after possibly clipping some characters)
+
+@item lexis
+defines a lexis. This is typically used in the lexicon and used as input to the rules.
+If the VARIANT keyword is left out, it has to come as the first 
+block of the rule 
+(after the comma closing the preamble or the preceding rule).
+
+If a lexis is used in the grammar, it is meant to stand for 
+a suppletive form. Since it may well be a typo, a warning is 
+given. We encourage the policy to put suppletive 
+paradigmatic exceptions as variants of the lexeme in the lexicon file.
+Especially since matches are ineffective for lexis rules, therefore
+conditions on the suppletion should be expressed with features
+which is much safer anyway. 
+@end itemize
+
+All the lexis and affix strings can contain any character except
+whitespace, comma, semcolon, colon??
+exclamation mark
+slash
+tilde
+plus sign
+[^'#' ' ' '\t' '\n' ';' ',' '\r' '!' '/' '+' '~']
+
+there should be a way to allow escapes.
+
+Substitutions (which are special kind of rules) are specified by 
+REPLACE/WITH blocks.
+
+@end deffn
+
+@deffn block CLIP integer
+This block specifies the number of characters that needs to be clipped 
+from one end of the input.
+
+It has no effect if the variant is a lexis or substitution.
+So you don't use this block in the lexicon.
+
+If no CLIP block is given, no characters are clipped (the integer defaults to zero).
+@end deffn
+
+@deffn block REPLACE pattern
+@deffnx block WITH template
+These blocks specify a substitution. 
+
+@var{pattern} is a hunlex regular expression.
+
+@var{tamplate} is a replacement string which can contain special symbols '\1', '\2', etc, 
+which reference the bracketed subpatterns in pattern.
+@end deffn
+
+@deffn block MATCH pattern
+specifies a match condition on rule application.
+The rule only applies if the input matches @var{pattern}, which is a hunlex regular expression.
+So you don't use this in the lexicon.
+
+The matched expression defines a match at the edge of the word, the beginning for prefixes and the end for suffixes. You may include special symbols like ^ and $, to make this more explicit.
+
+Match blocks are non-cumulative, but circumfixes allow two matches (one beginning with a
+^ and one ending in a $).
+
+@end deffn
+
+@deffn block IF condition ...
+If blocks specify the conditions of rule application. 
+Conditions are either positive conditions (feature name) or negative conditions (NOT feature-name).
+
+The rule only applies if the input has the positive features specified in the IF blocks
+and doesn't have the negative features specified in the IF block.
+
+IF blocks are therefore cumulative and the conditions are understood conjunctively.
+
+@end deffn
+
+@deffn block OUT output ...
+specify the output conditions of the variant (affix rule or lexis). 
+An output can be a feature or a morph
+
+Features can be restricted to particular morphs.
+
+@end deffn
+
+@deffn block TAG tag-string
+specifies the output tag chunk associated with the variant.
+
+@end deffn
+
+@deffn block USAGE usage-qualifier ...
+specifies usage qualifiers describing the variant.
+
+Cumulative (conjunctive) 
+
+@end deffn
+
+@deffn block FILTER feature ...
+tells that the morph in question is a filter which defines fallback rules for 
+lexical features. 
+
+This means that the variants are meant to apply only if the input has none of the filtered features.
+
+Has no effect within individual variants or in the lexicon. Only
+relevant in a morph preamble in the grammar.  
+
+Cumulative (conjunctive on the rule conditions)
+@end deffn
+
+@deffn block KEEP feature ...
+Defines 'inheritance' of features: a feature mentioned in the KEEP block is
+an output feature of the result of rule application if and only if the input has 
+the feature. As long as a particular variant applies to an input.
+
+If output features and keep features overlap, output features are meant to 
+override inheritance. 
+
+Features which are restricted by the input condition (IF block) are
+inherited normally, but since they are known, can also be mentioned in
+the OUT block for clarity.
+
+@quotation 
+@strong{NB:} The thingies following KEEP in a KEEP block are
+@i{features}. They can not be macro names. Don't trick yourself by
+'abbreviating' a sequence phonofeatures with a macro and then refer to
+that in a keep block.  Don't forget that macros abbreviate (a series of)
+blocks, so clearly they can't be nested within a KEEP block.
+@end quotation
+
+Cumulative
+
+@end deffn
+
+@deffn block FREE bool
+specifies if the rule application gives a full form. 
+For bound stems or non-closing affixes, it has to be set to false.
+
+By default, variants in the lexicon are NOT-free 
+variants in the grammar are free ????
+!!!!
+is this ok?
+@end deffn
+
+@deffn block FS feature-structure
+specifies the feature structure graph to merged when the rule applies.
+@var{feature-structure} is a kr-style features structure description string.
+@end deffn
+
+@deffn block FS feature-structure
+
+@end deffn
+
+
+@deffn block PASS bool
+
+@end deffn
+
+
+@node Macros
+@section Macros
+
+@cindex macros
+@kwindex macro definitions
+
+@quindex How do I define a macro in the grammar?
+@quindex Can I use the macros I defined in the grammar in the lexicon? Yes.
+
+@deffn expression DEFINE macro-name blocks
+defines a macro named @var{macro-name}. Later (any time after this definition), any time 
+@var{macro-name} is encountered it is understood as if it said @var{blocks}.
+@var{blocks} is a sequence of any blocks including (other) macro-names.
+The macro-name appearing elsewhere than its definition has to be already defined.
+
+If a macro-name is a declared morph-name?
+If a macro-name is a declared feature?
+
+@end deffn
+
+@deffn expression REGEXP regexp-name regexp
+binds @var{regexp-name} to a hunlex regular expression, i.e., a regular
+expression that can contain regular expression macro-names in
+angle-brackets. @var{regexp-name} can be referenced within any regular
+expression later.  An expression is resolved by replacing the substring
+<@var{regexp-name}> with the resolved @var{regexp}. 
+
+This means, that you have to esacpe you <-s and >-s if they do not
+delimit regexp names.
+
+As said, you can define regexp-macros using other macros, only at the time of
+using a regexp-name it has to be defined already (the definition should
+be earlier in the file), so that it can be resolved at the time of reading the 
+definition.
+@end deffn
+
+
+@node Metadata
+@section Metadata
+

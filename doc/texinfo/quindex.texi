@@ -1,0 +1,4 @@
+@node Frequently Asked Questions, , Concept Index, Top
+@unnumbered Frequently Asked Questions
+
+@printindex qu

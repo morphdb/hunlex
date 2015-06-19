@@ -1,0 +1,11 @@
+@node Command-line Control, Levels, Files, Top
+@chapter Command-line Control
+
+@quindex Can I use hunlex from a shell?
+@quindex Can I use hunlex on the command-line?
+
+This chapter is a verbatim include of the hunlex manpage.
+Command-line control is not the recommended interface to use 
+hunlex, see toplevel control (@pxref{Toplevel Control}).
+
+@verbatiminclude hunlex.man

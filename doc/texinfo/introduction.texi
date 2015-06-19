@@ -1,0 +1,189 @@
+@node Introduction, License, Top, Top
+@chapter Introduction
+
+This document presents @value{HUNLEX} which is being developed as part
+of the Budapest Institute of Technology Media Education and Research
+Center's HunTools Natural Language Processing Toolkit
+@value{MOKKWEB}
+
+@menu
+* Hunlex::                      
+* Motivation::                  
+* Configurable Compilations::   
+@end menu
+
+@node Hunlex
+@section Hunlex: A Short Description
+
+@quindex What is Hunlex?
+ 
+HunLex offers a @dfn{description language}, ie., a formalism for
+specifying a base lexicon and morphological rules which describe a
+language's morphology. This description which is stored in textual
+format serves as your @dfn{primary resources} that represents your 
+knowledge about the morphology and lexicon of the language in question. 
+
+@cindex hunlex
+@cindex resources, secondary
+@cindex resources, primary
+@cindex resources, output
+@cindex resources, input
+@cindex input resources
+@cindex output resources
+@cindex primary resources
+@cindex description language
+@cindex resource-specification language
+
+Now, providing a resource-specification language is rather useless in
+itself.  Hunlex is able to process these primary resources and create
+the type of resources that are used by some real-time word-level
+analysis tools. If you create these from your primary resources you
+might call them secondary resources. These provide the the
+language-specific knowledge to a variety of word-level analysis tools.
+
+At present, most importantly, Hunlex provides the
+language specific resources for the @dfn{HunTools} word-level analysis
+toolkit @pxref{Huntools}.  This package contains the @dfn{MorphBase}
+library of word-analysis routines such as spell-checker, stemmer,
+morphological analyzer/generator and their standalone executable
+wrappers.  Therefore, your single Hunlex description of your favourite
+language will enable you to perform @i{spell-checking}, @i{stemming},
+and @i{morphological analysis} for that language, which is more than
+useful.
+
+@cindex huntools 
+@cindex morphological analysis
+@cindex morphological analyzer
+@cindex stemming stemmer
+@cindex spellchecking
+@cindex spellchecker
+
+In addition to the HunTools routines, other software which use
+@dfn{ispell-type} resources will be able to use Hunlex's output. Among
+these are @dfn{myspell}, an open-source spell-checker (also used in
+@dfn{Open Office} @uref{http://www.openoffice.org}, see @ref{Myspell}),
+or @dfn{jmorph}, a superfast java morphological analyzer (@pxref{Jmorph}).
+
+This document describes how you can create your primary resources 
+and what you can (make Hunlex) do with them.
+
+@quotation Note
+This document is not intended to describe how to use any of these
+real-time tools, what they are good for. See the above links to learn
+more about them.
+@end quotation
+
+In particular, this document provides you with:
+@enumerate
+
+@item 
+The compulsory tedium about @ref{License}, @ref{Authors}, @ref{Contact}, @ref{Submitting a Bug Report}, etc.  @xref{About}.
+
+@item 
+The indispensable but trivial Installation notes, @pxref{Installation}.
+
+@item 
+A bit about @ref{Bootstrapping} your way as a Hunlex user.
+
+@item 
+The detailed exposition of the syntax and semantics of the resource specification language (@pxref{Description Language});
+
+TODO: not yet
+
+@item 
+The description of the toplevel control of the hunlex resoure compiler (@pxref{Toplevel Control})
+detailing all the options and parameters. The direct command line interface is also descibed there.
+
+@item 
+Some hints on @ref{Troubleshooting}.
+
+@item
+Information about @ref{Related Software and Resources}.
+
+@item
+as well as a lot of @i{advanced issues}, like @ref{Flags}, @ref{Levels}, @ref{Tags}, the list and format of @ref{Files}.
+
+@end enumerate
+
+@node Motivation
+@section Motivation
+ 
+@cindex resources, lexical
+@cindex lexical resources
+
+The motivation behind HunLex came from two opposing types of
+requirements @dfn{lexical resources} are supposed to fulfill: 
+
+@enumerate
+@item (i) scalability, maintainability, extensibility; and
+@item (ii) optimized format for the application. 
+@end enumerate
+
+The constraints in (i) favour @i{one central, redundancy-free, abstract,
+but transparent} specification, while the ones in (ii) require
+@i{possibly multiple application-specific, potentially redundant,
+optimized formats}. 
+
+In order to reconcile these two opposing requirements, HunLex introduces
+an offline layer into the word-analysis workflow, which mediates between
+two levels of resources: 
+
+@enumerate
+@item 
+a central database conforming to (i) (also primary resource, input resource), 
+@item 
+various application-specific formats conforming to (ii) (also secondary or output resource)
+@end enumerate
+
+The primary resources are supposed to reasonably designed to help human maintanance, 
+and the secondary ones are supposed to optimize very different things ranging
+from file size, performance with the tool that uses it, coverage, robustness, 
+verbosity, normative strictness depending on who uses it for what purpose.
+
+HunLex is used to @dfn{compile} the primary resources into a particular
+application-specific format @pxref{Output Resources}. This resource
+compilation phase is an offline process which is highly configurable so
+that users can fine-tune the output resources according to their needs.
+
+By introducing this layer of offline resource compilation, maintenance,
+extendability, portability of lexical resources is possible without
+compromising your performance on specific word-analysis tasks.  
+
+Providing the environment for a sensible primary resource specification
+framework and managing the offline precompilation process are the
+@i{raison d'@^etre} behind Hunlex.
+
+@node Configurable Compilations
+@section Configurable Compilations
+
+@quindex Is Hunlex just a converter?
+
+Configuration allows you to adjust the compilation of resources 
+along various dimensions:
+
+@enumerate
+@item 
+choice of output format that suits the algorithm
+(spell-checking, stemming, morphological analysis, generation, synthesis),
+
+@item 
+selection of morphemes to be included in the resource
+
+@item 
+grouping of morphemes to be stripped in one step as an affix cluster (with one rule application)
+
+@item
+selection of morphophonological features that are to be observed or ignored
+
+@item
+depth of recursive rule application
+
+@item
+selection of registers, degree of normativity, etc. based on @dfn{usage qualifiers} 
+in the database
+
+@item
+selection of output morphological annotation, configurable tags information
+
+@end enumerate
+

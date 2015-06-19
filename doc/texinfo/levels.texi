@@ -1,0 +1,292 @@
+@node Levels, Tags, Command-line Control, Top
+@chapter Levels
+
+
+@quindex What are levels?
+@cindex levels
+
+
+Levels index morphemes and are assigned to morphemes in the
+@samp{morph.conf} file (@pxref{Morpheme Configuration File}).
+
+Levels govern which affixes will be @dfn{merged} together into
+@i{complex affixes} (or affix clusters) and will constitute an affix
+rule (linguistically correctly, and affix-cluster rule) in the output
+affix file (@pxref{Output Resources}). Affix rules in the affix file
+will be @dfn{stripped} from the analyzed words by the analysis routines
+@i{in one step} (i.e., by one rule-application).
+
+@cindex affix rules, merging affix rules in the affix file
+
+Levels, then, regulate the output resources of hunlex and have no role
+to play in how you design your grammars. @i{There are no levels in the
+hunlex grammar and lexicon}, the files which describe the morphology of
+the language (@pxref{Primary Resources}). Levels make sense only in
+relation to the compilation process.
+
+This chapter describes why you would want levels, how you manipulate
+them and what consequences it has on analysis.
+
+@menu
+* Levels and Affix Rules::      
+* Levels and Stems::            
+* Levels and Ordering::         
+* Manipulating Levels with Options::  
+* Levels and Optimizing Performance::  
+@end menu
+
+@node Levels and Affix Rules
+@section Levels and Affix Rules
+
+@quindex What do levels mean for affixes and the affix file?
+
+Imagine a word has several affixes like @i{dalokban} (= @i{dal} 'song' +
+@i{ok} 'plural' + @i{ban} 'inessive').  Assume that your hunlex grammar
+correctly describes the plural and inessive morphemes and their
+combination rules. If you assign these morphemes to @i{different}
+levels, the output resource will contain affix rules expressing the
+morphemes separately. This means that these affixes are @i{not stripped
+in one go} by the analysis routines using the affix file as their
+resource.
+
+Some affixes, however, may need to be stripped as a cluster in one go,
+because some analysis algorithms do not allow any number of consecutive
+affix-strippings operations or because stripping them in one go is just
+more optimal for your purposes 
+@c
+(@pxref{Levels and Optimizing Performance}). Therefore the separate
+affix rules in the input grammar should be merged when they are dumped
+by hunlex as rules into the affix file.  Well, levels regulate which
+morphemes should be merged with which other morphemes. (To be more
+precise, they regulate which affix rules expressing which morphemes
+should be merged with which other which other affix rules expressing
+which other morphemes.
+
+Since merged affix rules are highly redundant and tedious to maintain,
+one of the main purposes of hunlex is actually to allow for high
+flexibility in your choice of merging affixes to create resources
+optimized for your needs, while at the same time also allow for
+transparent and non-redundant description for easy maintenance and
+scalability (@pxref{Introduction}).
+
+@node Levels and Stems
+@section Levels and Stems
+
+@quindex What do levels mean for stems in the lexicon and the dictionary?
+
+Levels do not only regulate which affixes are compiled into one affix
+cluster (an affix rule in the output affix file, 
+@c
+@pxref{Levels and Affix Rules}). They also @i{determine which stems are
+precompiled into the dictionary} (@pxref{Output Resources}).  In
+particular, all affixes below a so called @dfn{minimal lexical level}
+@c
+(@pxref{Levels and Ordering}) are precompiled with the stems of the lexicon
+into the output dictionary. 
+
+For instance, taking the example of the previous section, if both the
+plural and the inessive morpheme are below the minimal level (of
+on-line-ness), the whole morphologically complex word @i{dalokban} will
+be included in the dictionary file. To learn why youwould want to do
+such a thing see also @ref{Manipulating Levels with Options}.
+
+@node Levels and Ordering
+@section Levels and Ordering
+
+@quindex In what sense are levels ordered?
+
+The word 'level' is actually rather misleading, since the notion of
+level we have here has only a very restricted sense of ordering. There
+is no sense in which (rules expressing) a morpheme of level @i{i} can
+not be applied after (rules expressing) another morpheme of level @i{j}
+where @i{i} > @i{j}.
+
+There is a sense in which levels do have ordering, however. There is
+always a @dfn{minimal level} (that is the value of the @env{MIN_LEVEL}
+option, @pxref{Resource Compilation Options}) below which all morphemes
+are compiled into the dictionary (i.e., they are merged with the
+absolute stems in the lexicon and dumped as stems into the dictionary).
+The default lexical level is 1, meaning that (affix rules expressing)
+morphemes of level 0 or less are merged with the appropriate stems and
+the resulting (morphologically complex) words will be entries in the
+dictionary file (@pxref{Levels and Stems}.
+
+Since the dictionary file entries are the 'practical' stems of the
+analysis routines, configuring the level of morphemes gives you the
+option to adjust the depth of stemming. For instance, if you choose not
+to want your stemmer to analyze some derivational affix (which you
+otherwise productively describe with a rule in the grammar), all you
+have to do is to assign a lexical level to this morpheme in
+morph.include. Recompiling with this configuration will result in
+resources with the precompiled entries in the dictionary file.
+
+See also the @env{MAX_LEVEL} option, 
+@c
+@pxref{Resource Compilation Options}.
+
+@node Manipulating Levels with Options
+@section Manipulating Levels with Options
+
+@quindex With which options can I manipulate levels (and thereby affix-merging)?
+
+@menu
+* Levels and Generation::       
+* Levels and No Clusters::      
+* Levels and Steps of Affix Stripping::  
+@end menu
+
+@node Levels and Generation
+@subsection Levels and Generation
+@cindex generation
+@cindex generating all the words of the language
+@cindex minimal level
+@fiindex morph.conf
+@quindex Can I generate all the words of the language?
+
+You don't always have to fiddle manually with assigning alternative
+levels to each morpheme. For some of the special cases, hunlex provides
+an option.  It is very common that you want to generate all the words
+your grammar accepts. All you have to do is to set the minimal level to
+a very large value that is higher than any of the levels you have
+assigned to morphemes in the @samp{morph.conf} file (@pxref{Morpheme
+Configuration File}). This is done with the @env{MIN_LEVEL} option
+(@pxref{Resource Compilation Options}). This means to hunlex that all
+the rules expressing all the morphemes are to be compiled in the
+dictionary, which results in deriving all the words of the
+language. This option is also provided as the @samp{generate} toplevel
+target (@pxref{Targets}), in fact 
+
+@fnindex generate
+@example
+make generate
+@end example
+
+is just a shorthand for
+@example 
+make MIN_LEVEL=100000 new resources
+@end example
+
+@node Levels and No Clusters
+@subsection Levels and No Clusters
+
+In order to create an output in which no two affix rules are merged, it
+is enough to assign every morpheme to a different level for instance by
+using the following unix shell command:
+
+@example
+$ cp morph.conf morph.conf.orig
+$ cut -d' ' -f1 morph.conf.orig | nl -nln -s' ' | sed 's/\(.*\) \(.*\)$/\2 \1/g' > morph.conf
+@end example
+
+@quotation
+@strong{Todo:}
+I should provide an option that does this.
+@end quotation
+
+@c See the consequences also in 5.
+
+With a routine that supports any number of affix stripping operations,
+such a resource will allow correct analysis. But not with the ones that
+allow only a finite number of rule applications.
+
+@quotation
+@strong{Todo:}
+write on recursion
+@end quotation
+
+@quotation
+@strong{Geeky note:} If rule-application monotonically increases the
+size of the input, potential recursion is never unbounded recursion
+since all analysis routines have a fixed buffersize anyway. If not
+however, if empty strings or clippings make rule application
+non-monotonic in size, potential recursion may cause actual infinite
+loops in some uncautious implementations. Boundedness of recursion due
+to buffersize restrictions is only one sense in which the full intended
+(implied) generative power of any arbitrary hunlex grammar is not
+reflected in the analyzer's actual analysis potential.
+@end quotation
+
+@node Levels and Steps of Affix Stripping
+@subsection Levels and Steps of Affix Stripping
+@quindex How do I compile resources for the myspell spellchecker?
+@cindex myspell
+@cindex spellchecking, resources for myspell
+
+For myspell style resources where you want only one stage of affix
+stripping, you should use one lexical and one non-lexical level.
+Without having to create your alternative morph.conf file, this can
+easily be done with the combination of the @env{MIN_LEVEL} and the
+@env{MAX_LEVEL} options (@pxref{Options}). 
+
+You just set these two options to the same value @i{l}, and all
+morphemes with level equal or smaller then @i{l} will be compiled into
+the dictionary, and all the other morphemes (i.e., affix morphemes with
+level greater than @i{l}) will be merged into clusters (and these
+affixes will be dumped to the affix file as rules).  Implementations
+like myspell (@pxref{Myspell}) can only run correctly with such
+resources given that they allow only one step of suffix stripping.
+
+@quotation
+@strong{Todo:}
+This is slightly more compilcated because of prefixes and affixes
+stripped separately. We should clarify this. And this whole myspell
+business is actually not tested.
+@end quotation
+
+@quindex How many steps of affix stripping do I want to have?
+@cindex huntools
+@cindex jmorph
+@cindex myspell
+
+Myspell supports only one stage of affix stripping, the morphbase
+routines support two and jmorph supports any number (truely recursive).
+
+With an affix file where there are separate affix rules for these
+affixes, the analyzer would have to do two suffix stripping operations
+to recognize the word @i{dalokban}.  Therefore using such a resource,
+@command{myspell} will @i{not} recognize this word at all.  The
+@command{morphbase} routines will be able to analyze it since they allow
+@i{two} stages of suffix stripping which is just enough and
+@command{jmorph} as well since it allows any number of suffix stripping
+steps.
+
+So, when you configure which affixes are merged, make sure you have
+considered the generative capacity of the target analysis routine (how
+many suffix strippings it can make).
+
+@quindex Which affix rules do I want to merge and which words do I want to
+precompile into the dictionary?
+
+@node Levels and Optimizing Performance
+@section Levels and Optimizing Performance
+
+Which affix rules you want to merge and precompile into clusters is
+entirely up to you and usually a question of optimization.  If you
+choose not to precompile anything, then your affix file will be small,
+but your analysis may not be optimal for runtime (if it generates the
+correct analyses at all, @pxref{Levels and Steps of Affix Stripping}).
+
+If, on the other hand, you precompile all affixes into affix clusters,
+you might end up with hundreds of megabytes of affix file which is gonna
+compromise your runtime analysis memory load (though maybe faster for
+the analysis algorithm, than recursive calls). This last realization led
+the author of hunspell (@pxref{Huntools}) to introduce a second step of
+suffix stripping in the algorithm which was a legacy of the original
+myspell code with its one level of affix stripping.
+
+Finally, compiling everything in the lexicon is not a very good idea for
+complex morphologies and big lexicons. Although it may be indespensible
+for testing on smaller fragments of lexicons/grammars or for creating
+wordlists (@pxref{Test Targets}).
+
+Some special affix rules should always be precompiled into the
+dictionary and not output as affix rules. These rules are the ones that
+cannot be interpreted as affix rules at all, for instance, rules of
+@dfn{substitution} or @dfn{suppletion}. These rules are beyond the
+descriptive capacity of affix files.  Therefore all substitutions and
+suppletions are precompiled (merged with the rules or stems they can be
+applied to) irrespective of their level. Find more about this.
+
+
+
+

@@ -1,0 +1,1127 @@
+##################
+# DEFINE SECTION #
+##################
+
+DEFINE: VERB
+    OUT: IK_BASIC_FILTER
+; 
+ 
+DEFINE:	VERBINFLEX-INDEF
+ PRES_INDIC_INDEF_SG_1 PRES_INDIC_INDEF_SG_2 PRES_INDIC_INDEF_SG_3 PRES_INDIC_INDEF_PL_1 PRES_INDIC_INDEF_PL_2 PRES_INDIC_INDEF_PL_3 PAST_INDIC_INDEF_SG_1 PAST_INDIC_INDEF_SG_2 PAST_INDIC_INDEF_SG_3 PAST_INDIC_INDEF_PL_1 PAST_INDIC_INDEF_PL_2 PAST_INDIC_INDEF_PL_3 PRES_COND_INDEF_SG_1 PRES_COND_INDEF_SG_2 PRES_COND_INDEF_SG_3 PRES_COND_INDEF_PL_1 PRES_COND_INDEF_PL_2 PRES_COND_INDEF_PL_3
+;
+
+
+DEFINE:	VERBINFLEX-DEF
+ PRES_INDIC_DEF_SG_1 PRES_INDIC_DEF_SG_2 PRES_INDIC_DEF_SG_3 PRES_INDIC_DEF_PL_1 PRES_INDIC_DEF_PL_2 PRES_INDIC_DEF_PL_3 PRES_INDIC_SG_1_OBJ_2 PAST_INDIC_DEF_SG_1 PAST_INDIC_DEF_SG_2 PAST_INDIC_DEF_SG_3 PAST_INDIC_DEF_PL_1 PAST_INDIC_DEF_PL_2 PAST_INDIC_DEF_PL_3 PAST_INDIC_SG_1_OBJ_2 PRES_COND_DEF_SG_1 PRES_COND_DEF_SG_2 PRES_COND_DEF_SG_3 PRES_COND_DEF_PL_1 PRES_COND_DEF_PL_2 PRES_COND_DEF_PL_3 PRES_COND_SG_1_OBJ_2
+;
+
+
+DEFINE:	SUBJ-IMP-INDEF-INFLEX
+ SUBJ-IMP_INDEF_SG_1 SUBJ-IMP_INDEF_SG_2 SUBJ-IMP_INDEF_SG_3 SUBJ-IMP_INDEF_PL_1 SUBJ-IMP_INDEF_PL_2 SUBJ-IMP_INDEF_PL_3
+;
+
+
+DEFINE:	SUBJ-IMP-DEF-INFLEX
+ SUBJ-IMP_DEF_SG_1 SUBJ-IMP_DEF_SG_2 SUBJ-IMP_DEF_SG_3 SUBJ-IMP_DEF_PL_1 SUBJ-IMP_DEF_PL_2 SUBJ-IMP_DEF_PL_3 SUBJ-IMP_SG_1_OBJ_2
+;
+
+DEFINE: PRES_INDIC
+ PRES_INDIC_INDEF_SG_1 PRES_INDIC_INDEF_SG_2 PRES_INDIC_INDEF_SG_3 PRES_INDIC_INDEF_PL_1 PRES_INDIC_INDEF_PL_2 PRES_INDIC_INDEF_PL_3 PRES_INDIC_DEF_SG_1 PRES_INDIC_DEF_SG_2 PRES_INDIC_DEF_SG_3 PRES_INDIC_DEF_PL_1 PRES_INDIC_DEF_PL_2 PRES_INDIC_DEF_PL_3 PRES_INDIC_SG_1_OBJ_2 
+;
+
+DEFINE: PAST_INDIC
+ PAST_INDIC_INDEF_SG_1 PAST_INDIC_INDEF_SG_2 PAST_INDIC_INDEF_SG_3 PAST_INDIC_INDEF_PL_1 PAST_INDIC_INDEF_PL_2 PAST_INDIC_INDEF_PL_3 PAST_INDIC_DEF_SG_1 PAST_INDIC_DEF_SG_2 PAST_INDIC_DEF_SG_3 PAST_INDIC_DEF_PL_1 PAST_INDIC_DEF_PL_2 PAST_INDIC_DEF_PL_3 PAST_INDIC_SG_1_OBJ_2 
+;
+
+DEFINE: PRES_COND
+ PRES_COND_INDEF_SG_1 PRES_COND_INDEF_SG_2 PRES_COND_INDEF_SG_3 PRES_COND_INDEF_PL_1 PRES_COND_INDEF_PL_2 PRES_COND_INDEF_PL_3 PRES_COND_DEF_SG_1 PRES_COND_DEF_SG_2 PRES_COND_DEF_SG_3 PRES_COND_DEF_PL_1 PRES_COND_DEF_PL_2 PRES_COND_DEF_PL_3 PRES_COND_SG_1_OBJ_2
+;
+
+DEFINE: PRES_INDIC_INDEF
+ PRES_INDIC_INDEF_SG_1 PRES_INDIC_INDEF_SG_2 PRES_INDIC_INDEF_SG_3 PRES_INDIC_INDEF_PL_1 PRES_INDIC_INDEF_PL_2 PRES_INDIC_INDEF_PL_3
+;
+
+DEFINE: PAST_INDIC_INDEF
+ PAST_INDIC_INDEF_SG_1 PAST_INDIC_INDEF_SG_2 PAST_INDIC_INDEF_SG_3 PAST_INDIC_INDEF_PL_1 PAST_INDIC_INDEF_PL_2 PAST_INDIC_INDEF_PL_3 
+;
+
+DEFINE: PRES_COND_INDEF
+ PRES_COND_INDEF_SG_1 PRES_COND_INDEF_SG_2 PRES_COND_INDEF_SG_3 PRES_COND_INDEF_PL_1 PRES_COND_INDEF_PL_2 PRES_COND_INDEF_PL_3
+;
+
+
+DEFINE:	INF-INFLEX
+ INF_SG_1 INF_SG_2 INF_SG_3 INF_PL_1 INF_PL_2 INF_PL_3 INF_BARE
+;
+
+
+DEFINE:	COMPLETE_VERBINFLEX
+ VERBINFLEX-INDEF VERBINFLEX-DEF SUBJ-IMP-INDEF SUBJ-IMP-DEF INF
+;
+
+
+###################################
+# MORFOPHONOLOGICAL ABBREVAITIONS #
+###################################
+
+#morfophonological	OUT: abbreviations
+
+DEFINE:	quasi_analytic_V
+ quasi_analytic_V_indic quasi_analytic_V_nonindic
+
+;
+
+DEFINE:	synthetic
+ synthetic_inflex synthetic_derivation
+
+;
+
+
+##################
+# REGEXP SECTION #
+##################
+
+REGEXP:	V
+ aáeéiíoóöõuúüû
+;
+
+
+REGEXP:	shortV
+ aeioöuü
+;
+
+#	OUT: letters
+
+#REGEXP:	Clet
+# \([ngtl]y\|sz\|zs\|[bcdfghjklmnpqrstvwx]\)
+#;
+
+#	OUT: characters
+
+REGEXP:	C
+ bcdfghjklmnpqrstvwxyz 
+;
+
+
+REGEXP:	C-sz
+ bcdfghjklmnpqrtvwxy
+;
+
+##################
+# FILTER SECTION #
+##################
+
+# a filter that just simply creates the
+# stem without the -ik (in Hungarian the lexical form of a verb is the  pres ind 3sg indef)
+# Note: that some verbs are (optionally) ik_verbs but have no ik in the  lexicon
+# (hajkurász),
+# therefore we need to inherit the ik_basic feature
+IK_BASIC_FILTER
+    PASS:    true
+    FREE:     false
+    OUT:      STEM_VARIANT_FILTER
+    KEEP:     ik_basic zero_basic front back round nonround verb_def verb_indef  non_epenthetic epenthetic
+    TAG:     <VERB
+# for correction, ik-final verbs are ik_basic (as well) even
+# if they are not according to the lexicon
+
+, CLIP: 2    MATCH: ik        OUT: ik_basic
+
+# and conversely non-ik-final ones are always non_ik_verbs (as well)
+# the next two should be supported with NOT MATCH or something
+
+,         MATCH: [^k]        OUT: zero_basic
+,         MATCH: [^i]k        OUT: zero_basic
+;
+
+
+STEM_VARIANT_FILTER
+    FILTER: epenthetic non_epenthetic
+    KEEP: ik_basic zero_basic front back round nonround verb_def verb_indef
+    OUT: STEM_VARIANT_FACTORY
+, OUT: non_epenthetic
+;
+
+STEM_VARIANT_FACTORY
+    PASS: true
+    FREE: false
+    OUT: VERB_TRANSCODER
+    KEEP: front back round nonround verb_def verb_indef
+
+# non-alternating variants are left alone
+
+, IF: non_epenthetic non_szdv non_v
+    KEEP: ik_basic zero_basic
+    OUT: analytic synthetic
+
+# for epenthetic stems:
+#
+# note that the lexical form can be ik or zero
+# depending on the preferred variant
+# but optionally ik-basic-s can be both ik or non ik-final
+# so if they are epenthetic, they may have to
+# epenthesize or produce zero alternant.
+#
+# NB: To tell which is the case, we rely on the fact that epenthetic verbs
+# (i) either end in CVC -> CC (bérel -> bérl, romol -> romol -> roml)
+# (ii) or end in CC -> CVC (romlik -> roml -> romol)
+#
+# NB: ik_basic always pairs up with the synthetic stem
+# and zero_basic with the analytic stem
+#
+# (i)
+# leave alone the stem as the analytic
+
+, IF: epenthetic MATCH: [<V>][<C>]
+    OUT: analytic
+    KEEP: zero_basic
+
+# produce the zero variant which is
+
+, IF: epenthetic
+    REPLACE: [<V>]\([<C>]\)$ WITH: \1
+    OUT: synthetic
+    KEEP: ik_basic
+
+# (ii) romlik
+# in fact we don't expect CC final epenthetic verbs which are
+# not ik-basics,
+# NB: relevant defective verbs like sínyli are not epenthetic, but if they  are forced
+# to be
+# because of them we have to inherit (rather then assert) ik_basic status  in output
+# leave alone the *synthetic* variant (roml)
+
+#, IF: epenthetic
+#    MATCH: [<C>][<C>]
+#    OUT: synthetic
+#    KEEP: ik_basic
+
+# produce the epenthetic variant (roml -> romol, bérl -> bérel, dögl ->  dögöl)
+
+#, IF: epenthetic back
+#    REPLACE: \([<C>]\)\([<C>]\) WITH: \1o\2
+#    OUT: analytic
+#    KEEP: zero_basic
+
+#, IF: epenthetic front round
+#    REPLACE: \([<C>]\)\([<C>]\) WITH: \1ö\2
+#    OUT: analytic
+#    KEEP: zero_basic
+
+#, IF: epenthetic front nonround
+#    REPLACE: \([<C>]\)\([<C>]\) WITH: \1e\2
+#    OUT: analytic
+#    KEEP: zero_basic
+
+# other alternation types come here
+
+;
+
+VERB_TRANSCODER
+    PASS:    true
+    FREE:    false
+    KEEP:    synthetic_inflex synthetic_derivation analytic ik_verb non_ik_verb  front back round nonround
+, IF: verb_def OUT: VERBINFLEX-DEF
+, OUT: VERBINFLEX-INDEF
+;
+
+####################
+# MORPHEME SECTION #
+####################
+
+PRES_INDIC_INDEF_SG_1	
+	TAG: <PERS<1>>> 
+	FS: <VERB<PERS<1>>>
+, +ok		IF: synthetic_inflex zero_basic back
+, +ek		IF: synthetic_inflex zero_basic front nonround
+, +ök		IF: synthetic_inflex zero_basic front round
+, +om		IF: synthetic_inflex ik_basic back
+, +em		IF: synthetic_inflex ik_basic front nonround
+, +öm		IF: synthetic_inflex ik_basic front round
+, +ok		IF: synthetic_inflex ik_basic back	TAG: informal
+, +ek		IF: synthetic_inflex ik_basic front nonround	TAG: informal
+, +ök		IF: synthetic_inflex ik_basic front round	TAG: informal
+
+;
+
+PRES_INDIC_INDEF_SG_2	
+	TAG: <PERS<2>>> 
+	FS: <VERB<PERS<2>>>
+, +sz 		MATCH: [^sz]	IF: quasi_analytic_C
+, +asz		MATCH: [^sz]	IF: quasi_analytic_V_indic back
+, +esz 		MATCH: [^sz]	IF: quasi_analytic_V_indic front
+, +ol 		MATCH: [sz]	IF: synthetic_inflex back
+, +el		MATCH: [sz]	IF: synthetic_inflex front nonround
+, +öl 		MATCH: [sz]	IF: synthetic_inflex front round
+
+;
+
+PRES_INDIC_INDEF_SG_3	
+	TAG: > 
+	FS: <VERB>
+, +		IF: analytic zero_basic
+, +ik		IF: analytic ik_basic
+
+;
+
+PRES_INDIC_INDEF_PL_1	
+	TAG: <PERS<1>><PLUR>> 
+	FS: <VERB<PERS<1>><PLUR>>
+, +unk 		IF: synthetic_inflex back
+, +ünk		IF: synthetic_inflex front
+
+;
+
+PRES_INDIC_INDEF_PL_2	
+	TAG: <PERS<2>><PLUR>> 
+	FS: <VERB<PERS<2>><PLUR>>
+, +tok		IF: quasi_analytic_C back
+, +tek		IF: quasi_analytic_C front nonround
+, +tök		IF: quasi_analytic_C front round
+, +otok		IF: quasi_analytic_V_indic back
+, +etek		IF: quasi_analytic_V_indic front nonround
+, +ötök		IF: quasi_analytic_V_indic front round
+
+;
+
+PRES_INDIC_INDEF_PL_3	
+	TAG: <PLUR>> 
+	FS: <VERB<PLUR>>
+, +nak		IF: quasi_analytic_C back
+, +nek 		IF: quasi_analytic_C front
+, +anak		IF: quasi_analytic_V_indic back
+, +enek		IF: quasi_analytic_V_indic front
+
+;
+
+PAST_INDIC_INDEF_SG_1	
+	TAG: <PAST><PERS<1>>> 
+	FS: <VERB<PAST><PERS<1>>>
+, +tam		IF: t_nonfinal_past back
+, +tem		IF: t_nonfinal_past front
+, +ottam		IF: Vtt_nonfinal_past back
+, +ettem		IF: Vtt_nonfinal_past front nonround
+, +öttem		IF: Vtt_nonfinal_past front round
+, +ttam		MATCH: [<V>]	IF: back
+, +ttem		MATCH: [<V>]	IF: front
+
+;
+
+PAST_INDIC_INDEF_SG_2	
+	TAG: <PAST><PERS<2>>> 
+	FS: <VERB<PAST><PERS<2>>>
+, +tál		IF: t_nonfinal_past back
+, +tél		IF: t_nonfinal_past front
+, +ottál		IF: Vtt_nonfinal_past back
+, +ettél		IF: Vtt_nonfinal_past front nonround
+, +öttél		IF: Vtt_nonfinal_past front round
+, +ttál		MATCH: [<V>]	IF: back
+, +ttél 		MATCH: [<V>]	IF: front
+
+;
+
+PAST_INDIC_INDEF_SG_3	
+	TAG: <PAST>> 
+	FS: <VERB<PAST>>
+, +t		IF: t_final_past
+, +ott		IF: Vtt_final_past back
+, +ett		IF: Vtt_final_past front nonround
+, +ött		IF: Vtt_final_past front round
+, +tt 		MATCH: [<V>]		OUT:
+
+;
+
+PAST_INDIC_INDEF_PL_1	
+	TAG: <PAST><PERS<1>><PLUR>> 
+	FS: <VERB<PAST><PERS<1>><PLUR>>
+, +tunk		IF: t_nonfinal_past back
+, +tünk		IF: t_nonfinal_past front
+, +ottunk		IF: Vtt_nonfinal_past back
+, +ettünk		IF: Vtt_nonfinal_past front nonround
+, +öttünk		IF: Vtt_nonfinal_past front round
+, +ttunk		MATCH: [<V>]	IF: back
+, +ttünk 		MATCH: [<V>]	IF: front
+
+;
+
+PAST_INDIC_INDEF_PL_2	
+	TAG: <PAST><PERS<2>><PLUR>> 
+	FS: <VERB<PAST><PERS<2>><PLUR>>
+, +tatok			IF: t_nonfinal_past back
+, +tetek			IF: t_nonfinal_past front
+, +ottatok		IF: Vtt_nonfinal_past back
+, +ettetek		IF: Vtt_nonfinal_past front nonround
+, +öttetek		IF: Vtt_nonfinal_past front round
+, +ttatok			MATCH: [<V>]	IF: back
+, +ttetek			MATCH: [<V>]	IF: front
+
+;
+
+PAST_INDIC_INDEF_PL_3	
+	TAG: <PAST><PLUR>> 
+	FS: <VERB<PAST><PLUR>>
+, +tak		IF: t_nonfinal_past back
+, +tek		IF: t_nonfinal_past front
+, +ottak		IF: Vtt_nonfinal_past back
+, +ettek		IF: Vtt_nonfinal_past front nonround
+, +öttek 		IF: Vtt_nonfinal_past front round
+, +ttak		MATCH: [<V>]	IF: back
+, +ttek		MATCH: [<V>]	IF: front
+
+;
+
+PRES_COND_INDEF_SG_1	
+	TAG: <COND><PERS<1>>> 
+	FS: <VERB<COND><PERS<1>>>
+, +nék			IF: quasi_analytic_C
+, +enék			IF: quasi_analytic_V_nonindic front
+, +anék			IF: quasi_analytic_V_nonindic back
+, +nák 			IF: quasi_analytic_C back
+, +anák			IF: quasi_analytic_V_nonindic back
+
+;
+
+PRES_COND_INDEF_SG_2	
+	TAG: <COND><PERS<2>>> 
+	FS: <VERB<COND><PERS<2>>>
+, +nál 		IF: quasi_analytic_C back
+, +nél		IF: quasi_analytic_C front
+, +anál		IF: quasi_analytic_V_nonindic back
+, +enél		IF: quasi_analytic_V_nonindic front
+
+;
+
+PRES_COND_INDEF_SG_3	
+	TAG: <COND>> 
+	FS: <VERB<COND>>
+, +na		IF: quasi_analytic_C back
+, +ne		IF: quasi_analytic_C front
+, +ana		IF: quasi_analytic_V_nonindic back
+, +ene		IF: quasi_analytic_V_nonindic front
+
+;
+
+PRES_COND_INDEF_PL_1	
+	TAG: <COND><PERS<1>><PLUR>> 
+	FS: <VERB<COND><PERS<1>><PLUR>>
+, +nánk		IF: quasi_analytic_C back
+, +nénk		IF: quasi_analytic_C front
+, +anánk		IF: quasi_analytic_V_nonindic back
+, +enénk		IF: quasi_analytic_V_nonindic front
+
+;
+
+PRES_COND_INDEF_PL_2	
+	TAG: <COND><PERS<2>><PLUR>> 
+	FS: <VERB<COND><PERS<2>><PLUR>>
+, +nátok		IF: quasi_analytic_C back
+, +nétek		IF: quasi_analytic_C front
+, +anátok		IF: quasi_analytic_V_nonindic back
+, +enétek		IF: quasi_analytic_V_nonindic front
+
+;
+
+PRES_COND_INDEF_PL_3	
+	TAG: <COND><PLUR>> 
+	FS: <VERB<COND><PLUR>>
+, +nának		IF: quasi_analytic_C back
+, +nének		IF: quasi_analytic_C front
+, +anának		IF: quasi_analytic_V_nonindic back
+, +enének		IF: quasi_analytic_V_nonindic front
+
+;
+
+SUBJ-IMP-DEF	OUT: SUBJ-IMP-DEF-INFLEX 
+	FREE: false
+	TAG: <SUBJUNC-IMP> 
+	FS: <VERB<SUBJUNC-IMP>>
+# -szt
+, +sz	CLIP: 2	MATCH: szt	IF: analytic   back 	OUT: back				
+#pl. ossz	
+, +sz	CLIP: 2 	MATCH: szt	IF: analytic   front round	OUT: front round 
+# fürössz
+, +sz	CLIP: 2 	MATCH: szt	IF: analytic   front nonround	OUT: front nonround 
+# eressz
+#
+# -sz
+#
+, +sz	CLIP: 1	MATCH: sz	IF: analytic   back 	OUT: back	
+# bassz
+, +sz	CLIP: 1	MATCH: sz	IF: analytic   front nonround 	OUT: front nonround 
+# metssz
+, +sz	CLIP: 1	MATCH: sz	IF: analytic   front nonround 	OUT: front nonround 
+# ???
+#
+# -dz
+#
+, +dz	CLIP: 1	MATCH: dz	IF: analytic   back 	OUT: back 
+# fogóddz		
+, +dz	CLIP: 1	MATCH: dz	IF: analytic   front nonround	OUT: front nonround 
+# kérõddz
+, +dz	CLIP: 1	MATCH: dz	IF: analytic   front round	OUT: front round 
+# eddz
+#
+# -Vt (1) t-s
+# hat, 
+# (lát, lót, bocsát!)
+# vet, 
+# köt
+#
+, +ss	CLIP: 1	MATCH: [<shortV>]t	IF: analytic   back 	OUT: back d_cut_final 
+#pl. hass, etc. 
+, +ss	CLIP: 1	MATCH: [ls][áó]t	IF: analytic   back 	OUT: back d_cut_final 
+#pl. bocsáss, láss, lóss 
+, +ss	CLIP: 1	MATCH: [<shortV>]t	IF: analytic   front nonround 	OUT: front nonround d_cut_final 
+# vess
+, +ss	CLIP: 1	MATCH: [<shortV>]t	IF: analytic   front round 	OUT: front round d_cut_final 
+# köss
+#
+# -t (2) t-ts
+# ránt, szít, tanít
+# tát
+# kelt, vét, kerít 
+# ölt, fût
+# (fest!)
+#
+, +s 		MATCH: [<C-sz>í]t	IF: analytic   back 	OUT: back	d_add	
+#
+, +s 		MATCH: tát	IF: analytic   back 	OUT: back	d_add	
+#
+, +s 		MATCH: [<C-sz>éí]t	IF: analytic   front nonround 	OUT: front nonround d_add
+, +s 		MATCH: [<C-sz>û]t	IF: analytic   front round 	OUT: front round d_add
+, +s 	CLIP: 1	MATCH: fest	IF: analytic   front nonround 	OUT: front nonround d_cut_final 
+#fest
+#
+# -s
+#
+, +s		MATCH: s	IF: analytic   back 	OUT: back	d_cut_final		
+# áss
+, +s		MATCH: s	IF: analytic   front nonround	OUT: front nonround d_cut_final 
+# késs
+, +s		MATCH: s	IF: analytic   front round	OUT: front round d_cut_final 
+# ???
+#
+# -z (not -sz, -dz)
+#
+, +z		MATCH: [^sd]z	IF: analytic   back 	OUT: back	d_cut_final		
+# hozz
+, +z		MATCH: [^sd]z	IF: analytic   front nonround 	OUT: front nonround d_cut_final 
+# nézz
+, +z		MATCH: [^sd]z	IF: analytic   front round	OUT: front round d_cut_final	
+# kötözz
+#
+# -C (not -s, -z, -t)
+#
+, +j 		MATCH: [^<V>szt] IF: analytic   back 	OUT: back d_cut_final 	
+# adj, dobj, rój
+, +j 		MATCH: [^<V>szt] IF: analytic   front nonround 	OUT: front nonround d_cut_final 
+# lepj, szíj
+, +j 		MATCH: [^<V>szt] IF: analytic   front round 	OUT: front round d_cut_final 
+# ölj, lõjj
+#
+# V-final
+#
+, +j 		MATCH: [<V>] IF: analytic   back 	OUT: back dd_cut_final 	
+# rój
+, +j 		MATCH: [<V>] IF: analytic   front nonround 	OUT: front nonround dd_cut_final 
+# ???
+, +j 		MATCH: [<V>] IF: analytic   front round 	OUT: front round dd_cut_final 
+# lõjj
+# WATCH THIS SPACE
+, +jj		MATCH: [<V>]	IF: analytic   back 	OUT: back	
+#rossz helyesírású, pl. rójj
+, +jj		MATCH: [<V>]	IF: analytic   front nonround 	OUT: front nonround	
+#rossz helyesírású ????
+, +jj		MATCH: [<V>]	IF: analytic   front round 	OUT: front round	
+#rossz helyesírású, pl  lõjj. 
+
+;
+
+SUBJ-IMP-INDEF	OUT: SUBJ-IMP-INDEF-INFLEX 
+	FREE: false
+	TAG: <SUBJUNC-IMP> 
+	FS: <VERB<SUBJUNC-IMP>>
+# -szt
+, +sz	CLIP: 2	MATCH: szt	IF: analytic   back 	OUT: back				
+#pl. ossz	
+, +sz	CLIP: 2 	MATCH: szt	IF: analytic   front round	OUT: front round 
+# fürössz
+, +sz	CLIP: 2 	MATCH: szt	IF: analytic   front nonround	OUT: front nonround 
+# eressz
+#
+# -sz
+#
+, +sz	CLIP: 1	MATCH: sz	IF: analytic   back 	OUT: back	
+# bassz
+, +sz	CLIP: 1	MATCH: sz	IF: analytic   front nonround 	OUT: front nonround 
+# metssz
+, +sz	CLIP: 1	MATCH: sz	IF: analytic   front nonround 	OUT: front nonround 
+# ???
+#
+# -dz
+#
+, +dz	CLIP: 1	MATCH: dz	IF: analytic   back 	OUT: back 
+# fogóddz		
+, +dz	CLIP: 1	MATCH: dz	IF: analytic   front nonround	OUT: front nonround 
+# kérõddz
+, +dz	CLIP: 1	MATCH: dz	IF: analytic   front round	OUT: front round 
+# eddz
+#
+# -Vt (1) t-s
+# hat, 
+# (lát, lót, bocsát!)
+# vet, 
+# köt
+#
+, +ss	CLIP: 1	MATCH: [<shortV>]t	IF: analytic   back 	OUT: back d_cut_final 
+#pl. hass, etc. 
+, +ss	CLIP: 1	MATCH: [ls][áó]t	IF: analytic   back 	OUT: back d_cut_final 
+#pl. bocsáss, láss, lóss 
+, +ss	CLIP: 1	MATCH: [<shortV>]t	IF: analytic   front nonround 	OUT: front nonround d_cut_final 
+# vess
+, +ss	CLIP: 1	MATCH: [<shortV>]t	IF: analytic   front round 	OUT: front round d_cut_final 
+# köss
+#
+# -t (2) t-ts
+# ránt, szít, tanít
+# tát
+# kelt, vét, kerít 
+# ölt, fût
+# (fest!)
+#
+, +s 		MATCH: [<C-sz>í]t	IF: analytic   back 	OUT: back	d_add	
+#
+, +s 		MATCH: tát	IF: analytic   back 	OUT: back	d_add	
+#
+, +s 		MATCH: [<C-sz>éí]t	IF: analytic   front nonround 	OUT: front nonround d_add
+, +s 		MATCH: [<C-sz>û]t	IF: analytic   front round 	OUT: front round d_add
+, +s 	CLIP: 1	MATCH: fest	IF: analytic   front nonround 	OUT: front nonround d_cut_final 
+#fest
+#
+# -s
+#
+, +s		MATCH: s	IF: analytic   back 	OUT: back	d_cut_final		
+# áss
+, +s		MATCH: s	IF: analytic   front nonround	OUT: front nonround d_cut_final 
+# késs
+, +s		MATCH: s	IF: analytic   front round	OUT: front round d_cut_final 
+# ???
+#
+# -z (not -sz, -dz)
+#
+, +z		MATCH: [^sd]z	IF: analytic   back 	OUT: back	d_cut_final		
+# hozz
+, +z		MATCH: [^sd]z	IF: analytic   front nonround 	OUT: front nonround d_cut_final 
+# nézz
+, +z		MATCH: [^sd]z	IF: analytic   front round	OUT: front round d_cut_final	
+# kötözz
+#
+# -C (not -s, -z, -t)
+#
+, +j 		MATCH: [^<V>szt] IF: analytic   back 	OUT: back d_cut_final 	
+# adj, dobj, rój
+, +j 		MATCH: [^<V>szt] IF: analytic   front nonround 	OUT: front nonround d_cut_final 
+# lepj, szíj
+, +j 		MATCH: [^<V>szt] IF: analytic   front round 	OUT: front round d_cut_final 
+# ölj, lõjj
+#
+# V-final
+#
+, +j 		MATCH: [<V>] IF: analytic   back 	OUT: back dd_cut_final 	
+# rój
+, +j 		MATCH: [<V>] IF: analytic   front nonround 	OUT: front nonround dd_cut_final 
+# ???
+, +j 		MATCH: [<V>] IF: analytic   front round 	OUT: front round dd_cut_final 
+# lõjj
+# WATCH THIS SPACE
+, +jj		MATCH: [<V>]	IF: analytic   back 	OUT: back	
+#rossz helyesírású, pl. rójj
+, +jj		MATCH: [<V>]	IF: analytic   front nonround 	OUT: front nonround	
+#rossz helyesírású ????
+, +jj		MATCH: [<V>]	IF: analytic   front round 	OUT: front round	
+#rossz helyesírású, pl  lõjj. 
+
+;
+
+
+SUBJ-IMP_INDEF_SG_1	
+	TAG: <PERS<1>>> 
+	FS: <VERB<PERS<1>>>
+, +ak		IF: back
+, +ek		IF: front
+
+;
+
+SUBJ-IMP_INDEF_SG_2	
+	TAG: <PERS<2>>> 
+	FS: <VERB<PERS<2>>>
+, +		
+	TAG: short form	
+#rövid alak
+, +ál		IF: back 	TAG: long form
+, +él		IF: front 	TAG: long form 
+#hosszú alak
+
+;
+
+SUBJ-IMP_INDEF_SG_3	
+	TAG: > 
+	FS: <VERB>
+, +on		IF: back
+, +en		IF: front nonround
+, +ön		IF: front round
+, +ék		
+	TAG: formal
+
+;
+
+SUBJ-IMP_INDEF_PL_1	
+	TAG: <PERS<1>><PLUR>> 
+	FS: <VERB<PERS<1>><PLUR>>
+, +unk		IF: back
+, +ünk		IF: front
+
+;
+
+SUBJ-IMP_INDEF_PL_2	
+	TAG: <PERS<2>><PLUR>> 
+	FS: <VERB<PERS<2>><PLUR>>
+, +atok		IF: back
+, +etek		IF: front
+
+;
+
+SUBJ-IMP_INDEF_PL_3	
+	TAG: <PLUR>> 
+	FS: <VERB<PLUR>>
+, +anak		IF: back
+, +enek		IF: front
+
+;
+
+PRES_INDIC_DEF_SG_1	
+	TAG: <PERS<1>><DEF>> 
+	FS: <VERB<PERS<1>><DEF>>
+, +om		IF: synthetic_inflex back
+, +em		IF: synthetic_inflex front nonround
+, +öm		IF: synthetic_inflex front round
+
+;
+
+PRES_INDIC_DEF_SG_2	
+	TAG: <PERS<2>><DEF>> 
+	FS: <VERB<PERS<2>><DEF>>
+, +od		IF: synthetic_inflex back
+, +ed		IF: synthetic_inflex front nonround
+, +öd		IF: synthetic_inflex front round
+
+;
+
+PRES_INDIC_DEF_SG_3	
+	TAG: <DEF>> 
+	FS: <VERB<DEF>>
+, +ja 		MATCH: [^sz]	IF: analytic   back
+, +sza	CLIP: 1	MATCH: sz	IF: analytic   back
+, +sza:substandard	CLIP: 2	MATCH: szt	IF: analytic   back 	TAG: substandard
+, +dza	CLIP: 1	MATCH: dz	IF: analytic   back
+, +sa		MATCH: [^z]s	IF: analytic      back
+, +za		MATCH: [^ds]z	IF: analytic      back
+, +i  		IF: synthetic_inflex front
+
+;
+
+PRES_INDIC_DEF_PL_1	
+	TAG: <PERS<1>><PLUR><DEF>> 
+	FS: <VERB<PERS<1>><PLUR><DEF>>
+, +juk 		MATCH: [^sz]	IF: analytic   back
+, +szuk	CLIP: 1	MATCH: sz	IF: analytic   back
+, +dzuk	CLIP: 1	MATCH: dz	IF: analytic   back
+, +suk		MATCH: s	IF: analytic   back
+, +zuk		MATCH: [^ds]z	IF: analytic   back
+, +jük 		MATCH: [^sz]	IF: analytic   front
+, +szük	CLIP: 1	MATCH: sz	IF: analytic   front
+, +dzük	CLIP: 1	MATCH: dz	IF: analytic   front
+, +sük		MATCH: s	IF: analytic   front
+, +zük		MATCH: [^ds]z	IF: analytic   front
+
+;
+
+PRES_INDIC_DEF_PL_2	
+	TAG: <PERS<2>><PLUR><DEF>> 
+	FS: <VERB<PERS<2>><PLUR><DEF>>
+, +játok 		MATCH: [^sz]	IF: analytic      back
+, +szátok	CLIP: 1	MATCH: sz	IF: analytic      back
+, +dzátok	CLIP: 1	MATCH: dz	IF: analytic      back
+, +sátok		MATCH: s	IF: analytic      back
+, +zátok		MATCH: [^ds]z	IF: analytic      back
+, +itek  		IF: synthetic_inflex front
+
+;
+
+PRES_INDIC_DEF_PL_3	
+	TAG: <PLUR><DEF>> 
+	FS: <VERB<PLUR><DEF>>
+, +ják 		MATCH: [^sz]	IF: analytic      back
+, +szák	CLIP: 1	MATCH: sz	IF: analytic      back
+, +dzák	CLIP: 1	MATCH: dz	IF: analytic      back
+, +sák		MATCH: s	IF: analytic      back
+, +zák		MATCH: [^ds]z	IF: analytic      back
+, +ik  		IF: synthetic_inflex front
+
+;
+
+PRES_INDIC_SG_1_OBJ_2	
+	TAG: <PERS<1<OBJ<2>>>>> 
+	FS: <VERB<PERS<1<OBJ<2>>>>>
+, +lak		MATCH: [^l].	IF: quasi_analytic_C back
+, +lak		MATCH: l[^l]	IF: quasi_analytic_C back
+, +lek		MATCH: [^l].	IF: quasi_analytic_C front
+, +lek		MATCH: l[^l]	IF: quasi_analytic_C front
+, +ak		MATCH: ll	IF: quasi_analytic_V_indic back
+, +ek		MATCH: ll	IF: quasi_analytic_V_indic front
+, +alak		IF: quasi_analytic_V_indic back
+, +elek		IF: quasi_analytic_V_indic front
+
+;
+
+PAST_INDIC_DEF_SG_1	
+	TAG: <PAST><PERS<1>><DEF>> 
+	FS: <VERB<PAST><PERS<1>><DEF>>
+, +tam		IF: t_nonfinal_past back
+, +tem		IF: t_nonfinal_past front
+, +ottam		IF: Vtt_nonfinal_past back
+, +ettem		IF: Vtt_nonfinal_past front nonround
+, +öttem		IF: Vtt_nonfinal_past front round
+, +ttam		MATCH: [<V>]	IF: back
+, +ttem 		MATCH: [<V>]	IF: front
+
+;
+
+PAST_INDIC_DEF_SG_2	
+	TAG: <PAST><PERS<2>><DEF>> 
+	FS: <VERB<PAST><PERS<2>><DEF>>
+, +tad 		IF: t_nonfinal_past back
+, +ted		IF: t_nonfinal_past front
+, +ottad		IF: Vtt_nonfinal_past back
+, +etted		IF: Vtt_nonfinal_past front nonround
+, +ötted		IF: Vtt_nonfinal_past front round
+, +ttad		MATCH: [<V>]	IF: back
+, +tted 		MATCH: [<V>]	IF: front
+
+;
+
+PAST_INDIC_DEF_SG_3	
+	TAG: <PAST><DEF>> 
+	FS: <VERB<PAST><DEF>>
+, +ta 		IF: t_nonfinal_past back
+, +te		IF: t_nonfinal_past front
+, +otta		IF: Vtt_nonfinal_past back
+, +ette		IF: Vtt_nonfinal_past front nonround
+, +ötte		IF: Vtt_nonfinal_past front round
+, +tta		MATCH: [<V>]	IF: back
+, +tte 		MATCH: [<V>]	IF: front
+
+;
+
+PAST_INDIC_DEF_PL_1	
+	TAG: <PAST><PERS<1>><PLUR><DEF>> 
+	FS: <VERB<PAST><PERS<1>><PLUR><DEF>>
+, +tuk 		IF: t_nonfinal_past back
+, +tük		IF: t_nonfinal_past front
+, +ottuk		IF: Vtt_nonfinal_past back
+, +ettük		IF: Vtt_nonfinal_past front nonround
+, +öttük		IF: Vtt_nonfinal_past front round
+, +ttuk		MATCH: [<V>]	IF: back
+, +ttük 		MATCH: [<V>]	IF: front
+
+;
+
+PAST_INDIC_DEF_PL_2	
+	TAG: <PAST><PERS<2>><PLUR><DEF>> 
+	FS: <VERB<PAST><PERS<2>><PLUR><DEF>>
+, +tátok			IF: t_nonfinal_past back
+, +tétek			IF: t_nonfinal_past front
+, +ottátok		IF: Vtt_nonfinal_past back
+, +ettétek		IF: Vtt_nonfinal_past front nonround
+, +öttétek		IF: Vtt_nonfinal_past front round
+, +ttátok			MATCH: [<V>]	IF: back
+, +ttétek 		MATCH: [<V>]	IF: front
+
+;
+
+PAST_INDIC_DEF_PL_3	
+	TAG: <PAST><PLUR><DEF>> 
+	FS: <VERB<PAST><PLUR><DEF>>
+, +ták 		IF: t_nonfinal_past back
+, +ték		IF: t_nonfinal_past front
+, +ották		IF: Vtt_nonfinal_past back
+, +ették		IF: Vtt_nonfinal_past front nonround
+, +ötték		IF: Vtt_nonfinal_past front round
+, +tták		MATCH: [<V>]	IF: back
+, +tték 		MATCH: [<V>]	IF: front
+
+;
+
+PAST_INDIC_SG_1_OBJ_2	
+	TAG: <PAST><PERS<1<OBJ<2>>>>> 
+	FS: <VERB<PAST><PERS<1<OBJ<2>>>>>
+, +talak			IF: t_nonfinal_past back
+, +telek			IF: t_nonfinal_past front
+, +ottalak		IF: Vtt_nonfinal_past back
+, +ettelek		IF: Vtt_nonfinal_past front nonround
+, +öttelek		IF: Vtt_nonfinal_past front round
+, +ttalak			MATCH: [<V>]	IF: back
+, +ttelek			MATCH: [<V>]	IF: front
+
+;
+
+PRES_COND_DEF_SG_1	
+	TAG: <COND><PERS<1>><DEF>> 
+	FS: <VERB<COND><PERS<1>><DEF>>
+, +nám 		IF: quasi_analytic_C back
+, +ném		IF: quasi_analytic_C front
+, +anám		IF: quasi_analytic_V_nonindic  back
+, +eném		IF: quasi_analytic_V_nonindic front
+
+;
+
+PRES_COND_DEF_SG_2	
+	TAG: <COND><PERS<2>><DEF>> 
+	FS: <VERB<COND><PERS<2>><DEF>>
+, +nád 		IF: quasi_analytic_C back
+, +néd		IF: quasi_analytic_C front
+, +anád		IF: quasi_analytic_V_nonindic back
+, +enéd		IF: quasi_analytic_V_nonindic front
+
+;
+
+PRES_COND_DEF_SG_3	
+	TAG: <COND><DEF>> 
+	FS: <VERB<COND><DEF>>
+, +ná 		IF: quasi_analytic_C back
+, +né		IF: quasi_analytic_C front
+, +aná		IF: quasi_analytic_V_nonindic back
+, +ené		IF: quasi_analytic_V_nonindic front
+
+;
+
+PRES_COND_DEF_PL_1	
+	TAG: <COND><PERS<1>><PLUR><DEF>> 
+	FS: <VERB<COND><PERS<1>><PLUR><DEF>>
+, +nánk 		IF: quasi_analytic_C back
+, +nénk		IF: quasi_analytic_C front
+, +anánk		IF: quasi_analytic_V_nonindic back
+, +enénk		IF: quasi_analytic_V_nonindic front
+, +nók 		IF: quasi_analytic_C back	TAG: formal
+, +nõk		IF: quasi_analytic_C front	TAG: formal
+, +anók		IF: quasi_analytic_V_nonindic back	TAG: formal
+, +enõk		IF: quasi_analytic_V_nonindic front	TAG: formal
+
+;
+
+PRES_COND_DEF_PL_2	
+	TAG: <COND><PERS<2>><PLUR><DEF>> 
+	FS: <VERB<COND><PERS<2>><PLUR><DEF>>
+, +nátok		IF: quasi_analytic_C back
+, +nétek		IF: quasi_analytic_C front
+, +anátok		IF: quasi_analytic_V_nonindic back
+, +enétek		IF: quasi_analytic_V_nonindic front
+
+;
+
+PRES_COND_DEF_PL_3	
+	TAG: <COND><PLUR><DEF>> 
+	FS: <VERB<COND><PLUR><DEF>>
+, +nák		IF: quasi_analytic_C back
+, +nék		IF: quasi_analytic_C front
+, +anák		IF: quasi_analytic_V_nonindic back
+, +enék		IF: quasi_analytic_V_nonindic front
+
+;
+
+PRES_COND_SG_1_OBJ_2	
+	TAG: <COND><PERS<1<OBJ<2>>>>> 
+	FS: <VERB<COND><PERS<1<OBJ<2>>>>>
+, +nálak		IF: quasi_analytic_C back
+, +nélek		IF: quasi_analytic_C front
+, +análak		IF: quasi_analytic_V_nonindic back
+, +enélek		IF: quasi_analytic_V_nonindic front
+
+;
+
+SUBJ-IMP_DEF_SG_1	
+	TAG: <PERS<1>><DEF>> 
+	FS: <VERB<PERS<1>><DEF>>
+, +am		IF: back
+, +em 		IF: front
+
+;
+
+SUBJ-IMP_DEF_SG_2	
+	TAG: <PERS<2>><DEF>> 
+	FS: <VERB<PERS<2>><DEF>>
+#
+# lopj->lopd,  moss->mosd, fuss->fusd, fess->fesd, tojj->tojd, etc. but not lõjj->lõjd or lõj->lõd
+, +d	CLIP: 1	IF: d_cut_final  
+# lõj->lõdd
+, +dd	CLIP: 1	IF: dd_cut_final  
+# eddz->edzd, metssz->metszd, hozz->hozd oszd
+, +zd	CLIP: 2	MATCH: [sdz]z			OUT:	
+# tarts->tartsd, véts->vétsd
+, +d 		IF: d_add			OUT: 	
+#
+#
+# long forms are simple:
+#
+, +ad		IF: back 	TAG: long form
+, +ed		IF: front 	TAG: long form 
+#hosszú alak
+
+;
+
+SUBJ-IMP_DEF_SG_3	
+	TAG: <DEF>> 
+	FS: <VERB<DEF>>
+, +a		IF: back
+, +e		IF: front
+
+;
+
+SUBJ-IMP_DEF_PL_1	
+	TAG: <PERS<1>><PLUR><DEF>> 
+	FS: <VERB<PERS<1>><PLUR><DEF>>
+, +uk		IF: back
+, +ük		IF: front
+
+;
+
+SUBJ-IMP_DEF_PL_2	
+	TAG: <PERS<2>><PLUR><DEF>> 
+	FS: <VERB<PERS<2>><PLUR><DEF>>
+, +átok		IF: back
+, +étek		IF: front
+
+;
+
+SUBJ-IMP_DEF_PL_3	
+	TAG: <PLUR><DEF>> 
+	FS: <VERB<PLUR><DEF>>
+, +ák		IF: back
+, +ék		IF: front
+
+;
+
+SUBJ-IMP_SG_1_OBJ_2	
+	TAG: <PERS<1<OBJ<2>>>>> 
+	FS: <VERB<PERS<1<OBJ<2>>>>>
+, +alak		IF: back
+, +elek		IF: front
+
+;
+
+INF	OUT: INF-INFLEX 
+	FREE: false
+	TAG: <INF> 
+	FS: <VERB<INF>>
+, +ni 	IF: quasi_analytic_C  back 	OUT: back
+, +ni 	IF: quasi_analytic_C front round 	OUT: front round
+, +ni 	IF: quasi_analytic_C front nonround 	OUT: front nonround
+, +ani 	IF: quasi_analytic_V_nonindic back 	OUT: back
+, +eni 	IF: quasi_analytic_V_nonindic front 	OUT: front nonround
+
+;
+
+INF_SG_1	
+	TAG: <PERS<1>>> 
+	FS: <VERB<PERS<1>>>
+, +om CLIP: 1	IF: back
+, +öm CLIP: 1	IF: front round
+, +em CLIP: 1	IF: front nonround
+
+;
+
+INF_SG_2	
+	TAG: <PERS<2>>> 
+	FS: <VERB<PERS<2>>>
+, +od CLIP: 1	IF: back
+, +öd CLIP: 1	IF: front round
+, +ed CLIP: 1	IF: front nonround
+
+;
+
+INF_SG_3	
+	TAG: <PERS>> 
+	FS: <VERB<PERS>>
+, +a 	IF: back
+, +e 	IF: front
+
+;
+
+INF_PL_1	
+	TAG: <PERS<1>><PLUR>> 
+	FS: <VERB<PERS<1>><PLUR>>
+, +unk CLIP: 1	IF: back
+, +ünk CLIP: 1	IF: front
+
+;
+
+INF_PL_2	
+	TAG: <PERS<2>><PLUR>> 
+	FS: <VERB<PERS<2>><PLUR>>
+, +otok CLIP: 1	IF: back
+, +ötök CLIP: 1	IF: front round
+, +etek CLIP: 1	IF: front nonround
+
+;
+
+INF_PL_3	
+	TAG: <PERS><PLUR>> 
+	FS: <VERB<PERS><PLUR>>
+, +uk 	IF: back
+, +ük 	IF: front
+
+;
+
+INF_BARE	
+	TAG: > 
+	FS: <VERB>
+, ;
+
+VA	
+	TAG: <ADV-PARTICIPLE> 
+	FS: <VERB<ADV-PARTICIPLE>>
+, +va		IF: analytic back
+, +ve		IF: analytic front
+, +ván		IF: analytic back 	TAG: perfect
+, +vén		IF: analytic front 	TAG: perfect
+
+;
+
+O	
+	TAG: <ADJ-PRES-PARTICIPLE> 
+	FS: <VERB<ADJ-PRES-PARTICIPLE>>
+, +ó		IF: synthetic_derivation back
+, +õ		IF: synthetic_derivation front
+
+;
+
+ANDO	
+	TAG: <ADJ-FUTURE-PARTICIPLE> 
+	FS: <VERB<ADJ-FUTURE-PARTICIPLE>>
+, +andó		IF: synthetic_derivation back
+, +endõ		IF: synthetic_derivation front
+
+;
+
+HAT	
+	TAG: <MODAL> 
+	FS: <VERB<MODAL>>
+, +hat		IF: analytic back
+, +het		IF: analytic front
+
+;
+
+
+
+
+

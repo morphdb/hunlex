@@ -1,0 +1,49 @@
+@node License, About, Introduction, Top
+@chapter License
+
+@quindex Under what restrictions can I use this software?
+@quindex Under what restrictions can I modify this software?
+
+@cindex license
+@cindex LGPL
+
+Hunlex is free software. 
+
+It is licensed under @dfn{LGPL}, which roughly means the following.
+
+There are @i{no restrictions on downloading} it other than 
+your bandwidth and our slothful ways of making things available.
+
+There are @i{no restrictions on use} either other than its deficiencies,
+clumsy features and outragous bugs. However, this can be amended,
+because there are @i{no restrictions on modifying} it either.
+See also @ref{Contribution}.
+
+@quindex Under what copyright restrictions can I distribute linguistic resources compiled or to be compiled with hunlex?
+
+Freedom of use implies that any resources that you created, compiled with the
+mediation of Hunlex is yours and you hold the right to distribute it
+in any way. Consider telling us about this great news, see @ref{Contact}.
+
+@quindex Under what copyright restrictions can I redistribute this software?
+
+What is more, there are @i{no restrictions on redistributing} this software or
+any modified version of it.
+
+@quindex What is the License of this software?
+
+For some legalese telling you the same, read the License @c
+@uref{http://creativecommons.org/licenses/LGPL/2.1/}
+
+@c Creative Commons.
+
+@quotation 
+@strong{Todo:}
+Shall we not include the License?
+@end quotation
+@c @ref{Creative Commons}.
+
+@quindex I am using hunlex for commercial purposes to make money. Is this OK? OK with us. Ask your neighbour.
+
+@quindex I am selling this product to people for money. Is this OK? OK with us. Ask your customers.
+

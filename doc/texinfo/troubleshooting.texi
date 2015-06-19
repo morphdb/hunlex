@@ -1,0 +1,76 @@
+@node Troubleshooting, Related Software and Resources, Flags, Top
+@chapter Troubleshooting
+
+
+@menu
+* Installation Problems::       
+* Problems running hunlex::     
+* Resource Compilation Problems::  
+* Grammar Problems::            
+@end menu
+
+@node Installation Problems
+@section Installation Problems
+
+If hunlex wouldn't install, check @ref{Prerequisites} carefully with special attention to
+the versions.
+
+There are some hints hidden among the lines of @ref{Install} which you may have missed.
+
+@node Problems running hunlex
+@section Problems running hunlex
+
+If you upgraded from an earlier version, make sure you uninstall the earlier version first (@pxref{Uninstall and Reinstall}).
+
+If you use hunlex trhough the toplevel control with @file{Makefile}
+(@pxref{Toplevel Control}), the hunlex executable is by default assumed
+to be found in the path with name @file{hunlex}.
+
+By default, installation installs hunlex into @file{/usr/local/bin}
+(@pxref{Installed Files}) unless you set another install prefix.  
+
+Find out whether the hunlex executable is found in the path by typing
+
+@example
+$ which hunlex
+@end example
+
+If it is not found, check again where you installed it by looking into
+the file @file{install_prefix} in the toplevel directory of your source distribution.
+If this file is not there, your installation was not successful. 
+
+If you found out your @var{install-prefix}, see if @var{install-prefix}@file{/bin/hunlex} exists.
+If it does, you can do the following things:
+
+@itemize
+@item
+add @var{install-prefix}@file{/bin/hunlex}
+to your path by something like:
+
+@example 
+@env{PATH}=@var{install-prefix}@file{/bin}:$@{PATH@}
+@end example
+
+or 
+@item 
+tell the toplevel where to find your hunlex.
+This you can do by setting the @env{HUNLEX} toplevel option (@pxref{Options}).
+@end itemize
+
+
+@node Resource Compilation Problems
+@section Resource Compilation Problems
+
+
+@node Grammar Problems
+@section Grammar Problems
+
+If your grammar seems to overgenerate, first thing is check if you
+declared the features that you think your grammar is relying on in the
+phono.conf file.
+
+You may have mispelled some phonofeature, this can be traced by peeping
+into the debug messages. Ideally you do this by redirecting the output
+into a log file (with debug level set sufficiently high) and search the
+file for the term 'skipped'.  This is the warning hunlex gives you to
+let you know that an entity has been skipped.

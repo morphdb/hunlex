@@ -1,0 +1,1029 @@
+@node Toplevel Control, Description Language, Bootstrapping, Top
+@chapter Toplevel Control
+
+@quindex -  What is toplevel control?
+
+@cindex toplevel control
+@cindex hunlex, invoking
+@cindex make, toplevel control
+@fiindex HunlexMakefile
+@cindex command-line interface
+
+You typically want to use hunlex through its @dfn{toplevel control interface}.
+Toplevel control means that you invoke hunlex indirectly through a
+@file{Makefile} to compile your resources. 
+
+We envisage typical users of hunlex developing their lexical resources
+in an input directory and occasionally dump output resources for their
+analyser into specific target directories for various applications.
+
+If you don't like Makefiles or your system does not have @command{make}
+(how did you compile hunlex, then?), you will then invoke
+@command{hunlex} from a shell and use it via the @dfn{command-line
+interface}.  This is non-typical use and not recommended. The
+Command-line interface which is almost equivalent in functionality to
+the @file{Makefile} interface is described only for completeness and for
+people developing alternative wrappers (@pxref{Command-line Control}).
+
+
+@quindex -  What is a Makefile?
+@cindex Makefile
+@fiindex Makefile
+
+In fact, you don't actually need to know much about @command{make} and
+@file{Makefile}-s to use hunlex.  Just follow the steps described in
+@ref{Bootstrapping}. We assume that you have a project directory with a
+@file{Makefile} sitting in it in order to try out what is described here.
+
+This document is more like a reference manual that details what you can
+do with your resources and how you can do it through the @file{Makefile}
+interface. What the resources are and how you can develop your own is
+described in other chapters (@pxref{Files} and @pxref{Description Language}).
+
+@menu
+* Verbosity and Debugging::     
+* Storing your Settings::       
+* Targets::                     
+* Options::                     
+@end menu
+
+@node Verbosity and Debugging
+@section Verbosity and Debugging
+
+@quindex - How can I make compilation more verbose with the toplevel control?
+
+First of all, you need to know how to make your compilation process more verbose.
+
+In order to see what the toplevel @file{Makefile} wrapper is doing you have to unset
+@env{QUIET} option. For instance, typing
+
+@vrindex QUIET
+
+@example
+$ make QUIET= new resources
+@end example
+
+will tell you what the Makefile is doing, i.e., what programs it
+invokes, etc.  Unless you are debugging the toplevel control interface
+of hunlex, you don't want the toplevel to be verbose about what it is
+doing. So just don't do this.
+
+@cindex verbosity
+@cindex resource compilation
+
+What you want instead is to make the @i{resource compilation process} more
+verbose, probably because you want to debug your grammar or want hunlex
+to give you hints what went wrong with your resource compilation.
+
+@dfn{Verbosity} of the hunlex resource compilation can be set with the
+@env{DEBUG_LEVEL} option. 
+@vrindex DEBUG_LEVEL
+
+Typing 
+
+@example
+$ make @env{DEBUG_LEVEL}=1 
+@end example
+
+in your sandbox (with empty primary resources) will give you something
+like this (@pxref{Bootstrapping}):
+
+@verbatim
+Reading morpheme declarations and levels...0 morphemes declared.
+Reading phono features...0 phono features declared.
+Reading usage qualifiers...0 usage qualifiers declared.
+Parsing the grammar...ok
+Parsing the lexicon and performing closure on levels... 0 entries read.
+Dynamically allocating flags; dumping affix file...ok
+Dumping precompiled stems to dictionary file...ok
+0.00user 0.00system 0:00.02elapsed 12%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+329minor)pagefaults 0swaps
+@end verbatim
+
+The first couple of lines give you information about the stages of
+compilation and are described elsewhere.
+
+@c (@pxref{Implementation Notes})
+
+The enigmatic last two lines give you information about the @i{time} it took
+hunlex to compile your resources. If you are not interested in this information
+you can deset it using the @env{TIME} option (see 4)
+
+@vrindex TIME
+
+@quindex -  How can I display/undisplay the time it takes hunlex to compile the resources?
+
+You can choose not to bother with this information and deset the @env{TIME} option. 
+Typing, say,
+
+@example
+$ make TIME= new resources 
+@end example
+
+will not measure and display the duration of compiling.
+
+@node Storing your Settings
+@section Storing your Settings
+
+@quindex -  How can I remember the options on the toplevel?
+@cindex settings, storing
+@cindex options, remembering
+
+Your favourite settings can be remembered by adding them to your local
+@file{Makefile} in a rather obvious way. Let us assume you want your
+@env{DEBUG_LEVEL} to be set 1 by default and also that you couldn't care
+less about the time of compilation. In this case you want to have the
+following in your @file{Makefile}:
+
+@example
+DEBUG_LEVEL=1
+TIME=
+@end example
+
+You can also define your @dfn{default target} (@pxref{Targets}), i.e.,
+the 'task' that @command{make} will carry out if you invoke it without
+an expicit target.  For instance, if you always want to recompile your
+resources each time you invoke @command{make} irrespective of whether
+your primary resources and/or compile configurations changed, you can add
+the following line at the top of the file:
+
+@cindex default target
+
+@example
+default: new resources 
+@end example
+
+Now, your  @file{Makefile} looks something like this:
+
+@verbatim
+# comments are introduced by a '#'
+# my favourite target
+default: new resources 
+# my favourite settings
+DEBUG_LEVEL=1
+TIME=
+-include /path/to/HunlexMakefile
+@end verbatim
+
+
+@node Targets
+@section Targets
+
+@quindex -  What can I do through the toplevel control at all?
+@quindex -  What is a target?
+@quindex -  What targets are available through @file{HunlexMakefile}?
+@cindex targets
+
+@ignore
+You can have access to the same functionality of hunlex compilation as
+with the command line interface.
+By unsetting quiet mode with QUIET= the toplevel shows you how
+arguments are passed to hunlex.
+@end ignore
+
+The functionality of hunlex is accessed through @dfn{targets}. Targets
+are arguments of the @command{make} command which reads your local
+@file{Makefile} and ultimately consults the systemwise hunlex toplevel 
+Makefile called @file{HunlexMakefile} (@pxref{Installed Files}).
+
+@fiindex HunlexMakefile
+
+Usually, you will control hunlex through @command{make} by typing:
+
+@example 
+make @var{options} @var{target}
+@end example
+
+where @var{options} is a sequence of @dfn{variable assignments} which
+set your options described below (@pxref{Options}) and where @var{targets}
+is a sequence of targets. For more on variables and targets you 
+may consult the manual of @command{make}.
+
+The available toplevel targets are detailed below:
+
+@menu
+* Resource Compilation Targets::  
+* Special Targets::             
+* Test Targets::                
+@end menu
+
+@node Resource Compilation Targets
+@subsection Resource Compilation Targets
+
+@quindex - How do I compile my resources with hunlex?
+
+@deffn {Resource Compilation Target} resources
+compiles the output resources given the input resources and
+configuration files.  The necessary file locations and options are
+defined by the relevant variables described below (@pxref{Input File Options}). 
+This file creates the dictionary and the affix files (by
+default @file{dictionary.dic} and @file{affix.aff}, @pxref{Output
+Resources}).
+@end deffn
+
+@deffn {Resource Compilation Target} generate
+by setting MIN_LEVEL to a big number, this call generates resources that contain all
+words of the language precompiled into the dictionary. And the stems of the dictionary
+without their output annotation (see Annotation) are found in the file *wordlist*.
+@end deffn
+
+@quindex -  Is there a way to dump all the words my grammar generates?
+
+@node Special Targets
+@subsection Special Targets
+
+@deffn {Special Target} new
+@cindex targets, special
+
+pretends that the base resources are changed. You need this directive if
+you want to recompile the resources althouth no primary resource has
+changed.  This might happen because you are using a different
+configuration option.  (If the base resources are unchanged, no
+compilation would take place, you have to force it with 'new', see @command{make}).
+
+@example
+make @env{MIN_LEVEL}=3 new resources
+@end example
+@end deffn
+
+@deffn {Special Target} clean
+
+removes all intermediate temporary files, so that only lexicon, grammar,
+and the configuration files, and the output resources (affix and
+dictionary) remain.
+
+@quotation 
+@strong{Todo:}
+This is not implemented yet.
+@end quotation
+@end deffn
+
+@deffn {Special Target} distclean
+
+removes all non-primary resources, so that only lexicon, grammar, and the configuration files
+remain. 
+
+@end deffn
+
+
+@node Test Targets
+@subsection Test Targets
+
+
+Additional targets for testing are available, these all presuppose that
+the @command{huntools} (@pxref{Huntools}) is installed and that the
+executable @command{hunmorph} is found in the path. An alternative
+@command{hunmorph} can be used by setting the @env{HUNMORPH} option,
+(@pxref{Executable Path Options}).
+
+@quindex -  How can I test if my resources are working?
+@quindex -  How can I test if my grammar compiles?
+
+@cindex test, testing resources
+@cindex test targets
+@cindex targets, test
+
+
+@deffn {Test Target} test
+
+tests the resource by making @command{hunmorph} read the resources
+(@file{dic} and @file{aff} files) and analyze the contents of the file
+that is value of @env{TEST} (@pxref{Input File Options}).  @env{TEST} is by
+default set to the @i{standard input}, so after saying 
+
+@example
+$ make test
+@end example
+
+you have to type in words in the terminal window (exiting with
+@kbd{C-d}).
+
+If you want to test by analyzing a file, you have to set the value of
+@env{TEST}.
+
+@example
+$ make TEST=my/favourite/testfile test
+@end example 
+
+Test outputs are to @samp{stdout}, so just pipe it to a file
+
+@example
+$ make TEST=my/favourite/testfile test > test.out 2> test.log
+@end example
+
+@end deffn
+
+@deffn {Test Target} testwordlist
+
+will run @command{hunmorph} on the @file{wordlist} file (@pxref{Resource
+Compilation Targets}, @samp{generate}) and outputs the result on the
+standard output (so you may want to pipe the result to a file).
+
+@end deffn
+
+@deffn {Test Target} realtest
+
+puts hunlex and the analyzer to the test, by creating the resources
+according to the settings of your makefile, and then run hunmorph on the 
+generated whole wordlist.
+
+@quotation 
+@strong{Warning:} Note that this target first generates @i{all} words
+and then creates the resources again. Running this on huge databases is
+probably not a good idea. 
+
+The way you want to test a bigger database instead is by creating a a
+set of words that your ideal analyzer has to recognize or correctly
+analyze and test on that (with test). Realtest is just a quick and
+dirty shorthand for toy databases to check if everybody is with us.
+@end quotation
+@end deffn
+
+@node Options
+@section Options
+
+@cindex options, toplevel
+@cindex toplevel options
+@cindex Makefile variables
+@cindex variables, Makefile
+
+@quindex -   What options are available for the toplevel control?
+
+Options of the toplevel are in effect @file{Makefile} variables that can
+be set at the user's will.  
+
+(All the command-line options of hunlex can be accessed through the
+toplevel options are passed to hunlex to regulate the compilation
+process. The documentation of command line options is found in
+@ref{Command-line Control}, but only for the record. All hunlex options
+are all capital letters (@env{LEXICON}) and all command line options
+begin with a dash and are all small letters but otherwise they are the
+same (@option{-lexicon})).
+
+@cindex default values of options
+@cindex options, default value
+
+All options can be set or reset in your local Makefile (and remembered,
+@pxref{Storing your Settings}). These will override the system
+default. Both the system default and your local default can be overriden
+by direct command-line variable assignments passed to @command{make},
+such as the ones shown in this file:
+
+@example
+$ make QUIET= DEBUG_LEVEL=3 OUTPUTDIR=/my/favourite/ouputdir
+@end example
+
+Listed and explained below are all the hunlex options (all public
+Makefile variables) that the toplevel control provides for the user to
+manipulate.
+
+When you see something like @var{variable} (@var{value}), it means the
+default value of the variable @var{variable} is @var{value}.
+
+@menu
+* Executable Path Options::     
+* Verbosity and Debug Options::  
+* Input File Options::          
+* Output File Options::         
+* Resource Compilation Options::  
+@end menu
+
+@node Executable Path Options
+@subsection Executable Path Options
+
+@quindex -  How can I invoke an alternative version of hunlex (rather then the systemwide one)?
+@cindex options, executable path
+
+@defvr Option {HUNLEX (hunlex)}
+
+The hunlex executable is by default assumed to be found in the path with
+name @command{hunlex}.  By default, installation installs hunlex into
+@file{/usr/local/bin} (@pxref{Installation}). If you want to use (i) an
+alternative version of hunlex that is not the one found in the path, or
+(ii) an uninstalled version of hunlex, or (iii) an installed version but
+the path to which you don't want to include in your path, then you
+should set which hunlex to use with this variable.
+
+@example
+@env{HUNLEX}=@file{/my/favourite/version/of/hunlex}
+@end example
+
+@end defvr
+
+@defvr Option {HUNMORPH (hunmorph)}
+
+@cindex hunmorph
+@cindex huntools
+
+You need the executable @command{hunmorph} from the @samp{Huntools}
+package (@pxref{Huntools}) only for testing, if you don't want to test
+with direct analysis (just want to compile the resources), you don't
+need to bother.
+
+When used, however, the hunmorph executable is assumed to be found in
+the path with name @command{hunmorph}.  If this is not the case, update
+your path or provide the path to hunmorph with the line
+
+@example
+@env{HUNMORPH}=@file{/my/favourite/version/of/hunmorph}
+@end example
+
+@end defvr
+
+@node Verbosity and Debug Options
+@subsection Verbosity and Debug Options
+
+
+@cindex verbosity
+@cindex debugging 
+
+@defvr Option {QUIET (@@ = quiet)}
+
+Quiet mode is set by default which means that the workings of the
+@file{Makefile} toplevel won't bore you to death. The compilation debug
+messages that Hunlex blurps when running can still be displayed
+independently (see the @env{DEBUG_LEVEL} option below). The @env{QUIET}
+option only refers to what the toplevel wrapper invokes (this way of
+handling Makefile verbosity is an idea nicked from @file{OCamlMakefile}
+by Markus Mottl).
+
+@end defvr
+
+@defvr Option {DEBUG_LEVEL (0)}
+
+@cindex debugging resource compilation
+
+sets the verbosity of hunlex itself. By default debug level is set to
+0. Debug messages are sensitive to the debug level in the range from 0
+to 6-ish: the higher the number the more verbose hunlex is about its
+doings.
+
+0 is non-verbose mode, which means that it only displays (fatal) error
+messages.  If you set DEBUG_LEVEL to say -1, even error messages will be
+suppressed (only an uncaught exception will be reported in case of fatal
+errors).
+
+It is typically a good idea to set @env{DEBUG_LEVEL} to 2 or 3 and
+request more if we really want to see what is happening.
+
+@quotation
+@strong{Caveat:} In fact you won't understand the messages anyway, so
+the debug blurps just give you an idea of the context where something
+went wrong with your grammar/lexicon, etc.
+@end quotation
+
+@quotation
+@strong{Todo:} This shouldn't be so and debug messages pertaining to
+grammar development should be self-evident or well designed and
+documented. Especially parsing errors and/or compile warnings about the
+grammar and lexicon should be clear.
+@end quotation
+
+Usually you want to create a log by piping the debug output of
+@command{make} (standard error) with your debug messages to a file. This
+can be done by, for instance by
+
+@example
+$ make DEBUG_LEVEL=5 resources 2> log
+@end example 
+
+@end defvr 
+
+@defvr Option {TIME (time)}
+@cindex time
+
+By default with every run of hunlex it is measured how long it takes to
+compile the resources (unix shell's @command{time} command) and this
+information is displayed.  Surely, this is only interesting with big
+lexicons.  If you (i) don't have a time command, (ii) have a different
+time command, (iii) don't want time measured and displayed, just reset
+the @env{TIME} variable. The option can be unset by the line
+
+@example
+TIME=
+@end example
+
+in your local @file{Makefile}.
+
+@end defvr
+
+@node Input File Options
+@subsection Input File Options
+
+The type and use of hunlex input resource files are described in detail
+elsewhere (@pxref{Input Resources}). The options by which their locations
+can be (re)set are listed below:
+
+@fiindex lexicon file
+@fiindex grammar file
+
+@defvr Option {LEXICON (@var{grammardir}/lexicon)}
+lexicon file
+@end defvr
+
+@defvr Option {GRAMMAR (@var{grammardir}/grammar)}
+grammar file
+@end defvr
+
+They can all be set to alternative paths individually.  If they are in
+the same directory, the directory path can also be set via the variable
+@env{GRAMMARDIR}:
+
+@defvr Option {GRAMMARDIR (@var{inputdir})}
+the directory for the hunlex primary input resource files, which is, by default, set to 
+@var{inputdir}, the value of the variable @env{INPUTDIR}, see below.
+@end defvr
+
+@fiindex grammar directory
+
+There are three further input resources which need to be present for a hunlex compilation.
+These are the compilation configuration files.
+
+@fiindex usage.conf
+@fiindex morph.conf
+@fiindex phono.conf
+@fiindex configuration files
+
+
+@defvr Option {USAGE (@var{confdir}/usage.conf)}
+the usage configuration file (@pxref{Configuration Files})
+@end defvr
+
+@defvr Option {MORPH (@var{confdir}/morph.conf)}
+the morph(eme) configuration file (@pxref{Configuration Files})
+@end defvr
+
+@defvr Option {PHONO (@var{confdir}/phono.conf)}
+the configuration file (@pxref{Configuration Files}) for
+morphophonologic and morphoorthographic features
+@end defvr
+
+There are two optional configuration files, the signature and the
+flags file.  By default, the options correspoding to these files are set
+to the empty string, which tells hunlex not to use a feature structures
+(@pxref{Feature Structures}) or custom output flags (@pxref{Flags}).
+
+
+
+
+
+@defvr Option {SIGNATURE ('@w{}')}
+@fiindex fs.conf
+@fiindex signature file
+@cindex feature structure
+@cindex signature
+@fiindex signature file
+@cindex testing tags
+
+The location of the signature file used to process and validate features
+structures (@pxref{Feature Structures}, @pxref{Configuration Files}).
+If it is set to the empty string (the default), hunlex does not use
+feature structures.  
+
+If you use this file, it makes sense to call it something like
+@file{fs.conf} or @file{signature.conf} and store it in @var{confdir}
+with your other configuration files, so the assignment
+@example
+SIGNATURE=$(CONFDIR)/fs.conf
+@end example
+is an appropriate setting.
+@end defvr
+
+@defvr Option {FLAGS  ('@w{}')}
+@fiindex flags.conf
+@fiindex flags file
+@cindex flags
+
+The location of the custom output flags file 
+(@pxref{Configuration Files}) used to decide which flags are used in the output resources
+(@pxref{Flags}). If it is set to the empty string (default), hunlex will
+use a built-in flagset to determine flaggable characters
+(@pxref{Flags}).
+
+If you use this file, it makes sense to call it
+something like @file{flags.conf} and store it in @var{confdir} with
+your other configuration files, so the assignment 
+@example
+FLAGS=$(CONFDIR)/flags.conf
+@end example
+is an appropriate setting.
+@end defvr
+
+All configuration files can be set to alternative paths individually.  If they are in
+the same directory, the directory path can also be set via the variable
+@env{CONFDIR}:
+
+@defvr Option {CONFDIR (@var{inputdir})}
+@fiindex configutation directory
+the directory for the hunlex compilation configuration files, which is, by default, set to 
+@var{inputdir}, the value of the variable @env{INPUTDIR}, see below.
+@end defvr
+
+As explained all input files can be set to alternative paths
+individually or primary resources together and configuration files
+together. If @i{all} input resources (primary and configuration) are in
+the same directory, this directory path can also be set via the variable
+@env{INPUTDIR}:
+
+@defvr Option {INPUTDIR (. = @var{current directory})}
+@fiindex input resources directory
+the directory for all hunlex input resource files, which is by default,
+set to the currect directory.
+@end defvr
+
+A special test file is only used with the Test targets:
+
+@defvr Option {TEST (/dev/stdin)}
+@fiindex test file
+@cindex testing compiled resources
+@cindex test, a file to test your grammar on
+The value of TEST is a file (well, a file descriptor, to be precise),
+the contents of which is tested whenever the toplevel @samp{test} target
+is called (@pxref{Test Targets}). By default it is set to the standard 
+input, so testing with @samp{test} will expect you to type in words
+in your terminal window.
+@end defvr
+
+@node Output File Options
+@subsection Output File Options
+
+@cindex dictionary 
+@cindex affix
+
+
+Hunlex's output resources are the @file{affix} and the @file{dictionary} files
+(@pxref{Output Resources}).  The options by which their locations
+can be (re)set are listed below:
+
+@defvr Option {AFF (@var{outputdir}/affix.aff)}
+@fiindex affix file 
+@findex affix.aff
+affix file
+@end defvr
+
+@defvr Option {DIC (@var{outputdir}/dictionary.dic)}
+@fiindex dictionary file
+@findex dictionary.dic
+dictionary file 
+@end defvr 
+
+
+@defvr Option {WORDLIST (@var{outputdir}/wordlist)}
+@fiindex wordlist file
+The wordlist generated by the @samp{generate} target (@pxref{Resource Compilation Targets}).
+@end defvr 
+
+where @var{outputdir} (the default directory of the files)
+is the value of the variable @env{OUTPUTDIR}:
+
+@defvr Option {OUTPUTDIR (. = @var{current directory})}
+@fiindex output resources directory
+the directory for the hunlex output resource files, which is, by
+default, set to the currect directory
+@end defvr
+
+As you can see, the default setting is that all input and output files
+are located in the current directory under their recommended canonical
+names.  Putting the output resources in the same directory as the
+primary resources might not be a good idea if you want to compile
+various types of output resources.
+
+@node Resource Compilation Options
+@subsection Resource Compilation Options
+
+@defvr Option {DOUBLE_FLAGS (@w{})}
+@cindex flags, setting double flags 
+if set, hunlex uses double flags (two-character flags) in the output
+resources (@pxref{Flags}).
+@end defvr
+
+@cindex levels
+
+The following two options regulate the level of morphemes.  You find
+more details about levels in a separate chapter (@pxref{Levels}).
+
+@defvr Option {MIN_LEVEL (1)}
+@cindex level, setting minimal level
+Morphemes of level below @env{MIN_LEVEL} are treated as @i{lexical},
+i.e., are precompiled with the appropriate stems into the dictionary
+file.  By default, only morphemes of level 0 or below are precompiled
+into the dictionary.
+@end defvr
+
+
+@defvr Option {MAX_LEVEL (10000)}
+@cindex level, setting maximal level
+Morphemes with levels higher than the value of @env{MAX_LEVEL} are, on
+the other hand, treated as being on the same (non-lexical) level.  By
+default, only morphemes of level above 10000 are treated as having the
+same level.
+@end defvr
+
+
+The options below regulate the format of output resources
+in detail:
+
+@defvr Option {TAG_DELIM ('@w{}')}
+determines the delimiter hunlex puts between individual tags of
+affixes when tags are merged.
+
+@cindex delimiter, tag
+@cindex tags
+
+This is interesting if you have a tagging scheme where a morpheme is tagged with 
+a label @samp{MORPH1}, but in the output you want them clearly delimited, like:
+@example 
+wordtoanalyze
+>lemma_MORPH1_MORPH2
+@end example
+The above is possible if you set
+@example
+TAG_DELIM='_'
+@end example
+@end defvr
+
+@defvr Option {OUT_DELIM ('@w{ }')}
+@defvrx Option {OUT_DELIM_DIC (<TAB>)}
+sets the delimiter to put between the fields of the @file{affix} and @file{dictionary}
+files, respectively. By default it is set to a single space for the affix file and 
+set to <TAB> in the dictionary.
+
+@cindex delimiter
+@quotation 
+@strong{NB:} A tab might allow better postprocessing in the affix file
+and even allow spaces in the tags which might be useful. 
+
+At the time of writing the @command{huntools} reader only allowed a TAB
+not a space as delimiter in the dictionary file so change with caution.
+@end quotation
+@end defvr
+
+@defvr Option {MODE (Analyzer)}
+@cindex mode, setting mode
+the major output mode regulates what information gets output in the
+affix and dictionary files and how affix entries are conflated.
+
+@quotation 
+@strong{Warning:} This option is not effective at the moment 
+due to the lack of a clear functional specification and it is also unclear 
+how this option should interact with the option @env{STEMINFO} (below). 
+@end quotation
+
+@quotation 
+@strong{Todo:} Clarify this. See warning.
+@end quotation
+
+The possible values at the moment are:
+@itemize
+@item Spellchecker
+@item Stemmer
+@item Analyzer
+@item NoMode
+@end itemize
+all without effect (see warning).
+
+@end defvr
+
+@defvr Option {STEMINFO (LemmaWithTag)}
+@cindex tags, settings output tags
+@cindex output, tags to output
+@quindex -  How can I set what tags are output by the analyzer?
+regulates what info the analyzer should output about a word.
+
+This option can take the following values:
+@itemize
+@item Tag
+only output the tag of a lexical stem (to output the pos tag of the stem)
+@item Lemma
+only output the lemma of a lexical stem (for stemmers doing lexical indexing)
+@cindex stemming, settings for
+@item Stem
+output the stem allomorph of the stem (e.g., for counting stem variant occurrences?)
+@cindex allomorph, setting stem allomorph to output
+@item LemmaWithTag
+output lemma with the tag (default, for morphological analysis)
+@cindex lemma, setting output lemma
+@item StemWithTag
+output stem (allomorph) with the tag (?)
+@item NoSteminfo
+no output for the dictionary (for spell-checker resources).
+@cindex spell-checking, settings for
+@end itemize
+@end defvr
+
+@defvr Option {FS_INFO ()}
+@cindex feature structures
+regulates if feature structure annotations (@pxref{Feature Structures})
+should be output along with the normal (string type) tags
+(@pxref{Tags}). This is extremely useful for debugging purposes.  If the
+manually supplied tag chunks are supposed to yield well-formed features
+structures in the output annotation of the analyzer, it is a good idea to 
+check whether this is the case. If this option is set to @samp{-fs_info}
+(the corresponding command-line option), the feature structures resulting 
+from unification are output along with the tags in the dictionary and the 
+affix file. Typically, this option is used with the @samp{generate} target
+(@pxref{Resource Compilation Targets}) and the second and the third columns
+of the dictionary file are compared (they are supposed to be identical).
+
+@quotation 
+@strong{Todo:} This process should be added to the set of toplevel test
+targets.
+@end quotation
+@end defvr
+
+@cindex variables, in affix file
+@cindex affix file, variables in 
+The affix file specifies a lot of variables to be read by the morphbase
+routines. Some of these are metadata but some are crucial for
+suggestions and accent replacement for automatic error correction, see
+below.
+
+@quotation 
+@strong{Warning:} This part is a disasterously underdevelopped part of
+hunlex and an outragously ad-hoc part of morphbase as well.  
+@end quotation
+
+@cindex preambles, for affix and dictionary files
+@fiindex preambles for affix and dictionary files
+
+@dfn{Preambles} can be generated to hunlex output files these are meant
+to be 'official' comment headers about copyright information, etc.
+
+@defvr Option {AFF_PREAMBLE ()}
+@defvrx Option {DIC_PREAMBLE ()}
+are files to be included as preambles in the affix and dictionary output
+resources, respectively.  By default, they are unset, ie., no preambles
+will be included into the output resources.
+
+@quotation 
+@strong{NB:} This feature is only available on toplevel control and
+will never be integral part of the hunlex executable.
+@end quotation
+@end defvr
+
+@defvr Option {CHAR_CONVERSION_TABLE ()}
+@defvrx Option {REPLACEMENT_TABLE ()}
+@fiindex character conversion table
+@fiindex character replacement table
+@cindex huntools
+These are the character-conversion table and replacement table to be
+included into morphbase resources if alternatives (e.g., for
+spellchecking) or robust error correction is required
+(@pxref{Huntools}). These features are documented in the huntools
+documentation (hopefully, but certainly not here, @pxref{Output
+Resources}, @pxref{Huntools}).
+
+@quotation 
+@strong{NB:} This feature of including these extra files into the
+affix file is only available through toplevel control and will never be
+integral part of the hunlex executable.
+@end quotation
+@end defvr
+
+@defvr Option {AFF_SET (ISO8859-2)}
+@cindex character set, setting character set in the affix file
+Identifies the character-set for the analyzer reading the 
+affix file. By default, this is set to @samp{ISO8859-2}, i.e., 
+Eastern European. Maybe this is the 'hun' in hunlex...
+@end defvr 
+
+@defvr Option {AFF_SETTINGS (@var{confdir}/affix_vars.conf)}
+@fiindex affix settings file
+is the file from which settings for some affix variables are read.
+If it doesn't exist, no affix variables other than 
+the ones directly managed are dumped into the affix file
+@end defvr
+
+
+@quotation 
+@strong{Todo:} 
+Need to sort these things out.
+@end quotation
+
+Some affix file variables are managed by hunlex internally but 
+dumped to the affix file by the toplevel routines.
+
+@quotation
+@strong{Todo:} 
+This is done at the moment by the toplevel Makefile, but should be 
+integrated into the hunlex executable itself.
+@end quotation
+
+@defvr Option {AFF_FORBIDDENWORD (!)}
+@defvrx Option {AFF_ONLYROOT (~)}
+@cindex flags, setting special flags through toplevel options
+These two flags will be attached to (i) bound stems and (ii) affix
+entries which can not be stripped first (i.e., suffixes which cannot end
+a word, @pxref{Flags}).
+@end defvr
+
+@defvr Option {STEM_GIVEN ()}
+If this flag is present, it indicates for the 
+stemmer/analyzer that the stem string is to be output or not 
+as part of the annotation. For instance (if STEM_GIVEN flag is 'x'), the 
+following dic file 
+@example
+go/	[VERB]
+went/x	go[VERB]
+@end example
+will result in the following stemming:
+@example
+> go
+go[VERB]
+> went 
+go[VERB]
+@end example
+This makes more compact dictionaries. What information one wants the
+stemmer and analyzer to output can be configured through hunlex options
+(see below).
+
+@quotation
+@strong{Todo:}
+This flag is not implemented yet (since it is not implemented
+yet in morphbase, either, but probably will never be implemented
+since treatment of special flags shouldn't be user customizable
+above the choice of flaggable characters.
+@end quotation
+@end defvr
+
+@quotation 
+@strong{Warning:} 
+Make sure the flags given here are consistent with the double flags option and 
+the custom flags file (see the FLAGS variable above, and @pxref{Flags}).
+
+These options are superfluous and should be automatically managed by hunlex which 
+would write them into the affix file. @strong{Very likely to be deprecated soon.}
+@end quotation
+
+@quotation
+@strong{Todo:} 
+This needs to be implemented.
+@end quotation
+
+@quotation
+@strong{Warning:} Additional settings that are to be included in the
+affix file and are crucial part of the resources (partly should be set
+by hunlex itself) such as compoundflags. I have no idea what to do with
+these at the moment. The ones I know of are listed here just for the record.
+@end quotation
+
+@quotation
+@strong{Todo:} 
+This needs to be sorted out.
+@end quotation
+
+Some of these data are actually global and could even go to the settings preamble
+(@env{AFF_SETTINGS}):
+@itemize 
+@item NAME
+@item LANG
+@item HOME
+@item VERSION
+@end itemize
+
+These ones should be dynamic metadata
+@itemize 
+@cindex metadata, output metadata into affix file
+??
+@end itemize
+
+The ones below should clearly be controled and output by hunlex itself.
+(also @env{ONLYROOT} and @env{FORBIDDENWORD}, but they are handled by
+the toplevel, at least).
+
+Ones relating to compounding (compounding is handled very differently by
+@command{myspell}, @command{morphbase} and @command{jmorph}):
+@cindex compounding, affix file variables for compounding
+@cindex variables, affix file
+
+@itemize
+@item COMPOUNDMIN
+@item COMPOUNDFLAG
+@item COMPOUNDWORD?
+@item COMPOUNDFORBIDFLAG
+@item COMPOUNDSYLLABLE
+@item SYLLABLENUM
+@item COMPOUNDFIRST
+@item COMPOUNDLAST
+@end itemize
+
+@quotation
+@strong{Warning:}
+Compounding is as yet unsupported by hunlex and should be worked on with high priority.
+@end quotation
+
+I have really no idea about the following ones:
+@itemize
+@item TRY
+@item ACCENT
+@item CHECKNUM
+@item WORDCHARS
+@item HU_KOTOHANGZO
+@end itemize
+
+
+
+
+
+
+

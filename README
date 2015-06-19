@@ -1,0 +1,36 @@
+Hunlex
+
+What is Hunlex? (see reference manual for more)
+
+HunLex offers a description language, ie., a formalism for specifying a base
+lexicon and morphological rules which describe a language's morphology. This
+description which is stored in textual format serves as your primary resources
+that represents your knowledge about the morphology and lexicon of the language
+in question.
+ Now, providing a resource-specification language is rather useless in itself.
+Hunlex is able to process these primary resources and create the type of
+resources that are used by some real-time word-level analysis tools. If you
+create these from your primary resources you might call them secondary
+resources. These provide the the language-specific knowledge to a variety of
+word-level analysis tools.
+At present, most importantly, Hunlex provides the language specific resources
+for the HunTools word-level analysis toolkit see Huntools. This package
+contains the MorphBase library of word-analysis routines such as spell-checker,
+stemmer, morphological analyzer/generator and their standalone executable
+wrappers. Therefore, your single Hunlex description of your favourite language
+will enable you to perform spell-checking, stemming, and morphological analysis
+for that language, which is more than useful.
+ In addition to the HunTools routines, other software which use ispell-type
+resources will be able to use Hunlex's output. Among these are myspell, an
+open-source spell-checker (also used in Open Office http://www.openoffice.org,
+see Myspell), or jmorph, a superfast java morphological analyzer (see Jmorph).
+
+How to install Hunlex?
+type make then make install. 
+No seriously. 
+For more see the installation section of the reference manual
+
+Enjoy!
+
+Viktor Tron
+v.tron@ed.ac.uk

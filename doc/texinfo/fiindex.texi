@@ -1,0 +1,4 @@
+@node Files Index, Concept Index, Description Language Index, Top
+@unnumbered Files Index
+
+@printindex fi
